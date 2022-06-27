@@ -1,0 +1,12 @@
+.errorMessage {
+    color: darkred;
+}
+
+.error {
+    border: darkred 1px solid;
+}
+
+.isDone {
+    opacity: 0.4;
+    text-decoration: line-through;
+}
