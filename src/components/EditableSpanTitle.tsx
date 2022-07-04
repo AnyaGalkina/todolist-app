@@ -7,7 +7,7 @@ type PropsType = {
 
 const EditableSpanTitle: React.FC<PropsType> = (props) => {
     const [editMode, setEditMode] = useState(false);
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState(props.title);
 
     const activateEditMode = () =>{
         setEditMode(true);
@@ -29,14 +29,12 @@ const EditableSpanTitle: React.FC<PropsType> = (props) => {
     }
 
     return (
-        <>
-            {editMode ? <input value={title}
+        editMode ? <input value={title}
                                onChange={onChangeTitleHandler}
                                onBlur={activateViewMode}
                                onKeyDown={onKeyDownHandler}
                                autoFocus/>
-                : <span onDoubleClick={activateEditMode}>{props.title}</span>}
-        </>
+                : <span onDoubleClick={activateEditMode}>{props.title}</span>
     );
 };
 

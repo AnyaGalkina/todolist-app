@@ -86,6 +86,7 @@ function App() {
     const changeTodolistTitle = (todolistID: string, title: string) => {
         setTodolists(todolists.map(tl => tl.id === todolistID ? {...tl, title}: tl))
     }
+
     const setPrevState = () => {
         setTasks(previousState);
     }
