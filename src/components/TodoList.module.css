@@ -8,5 +8,10 @@
 
 .isDone {
     opacity: 0.4;
-    text-decoration: line-through;
+    /*text-decoration: line-through;*/
+}
+
+.button {
+color:black;
+    backgroundColor:yellow
 }

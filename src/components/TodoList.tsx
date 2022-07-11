@@ -1,9 +1,12 @@
 import React, {ChangeEvent} from "react";
 import {ACTIVE, ALL, COMPLETED, FilterValuesType, TaskType} from "../App";
 import styles from "./TodoList.module.css";
-import Button from "./Button/Button";
+// import Button from "./Button/Button";
 import AddItemForm from "./Input/AddItemForm";
 import EditableSpanTitle from "./EditableSpanTitle";
+import {Button, Checkbox, IconButton} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {DeleteOutline, DeleteOutlined} from "@mui/icons-material";
 
 type PropsType = {
     todolistId: string;
@@ -19,6 +22,7 @@ type PropsType = {
     changeTitle: (todolistId: string, taskId: string, title: string) => void;
     changeTodolistTitle: (todolistId: string, title: string) => void;
 }
+
 
 const TodoList = (props: PropsType) => {
 
@@ -36,7 +40,7 @@ const TodoList = (props: PropsType) => {
     }
     let tasksList = props.tasks.length ?
         props.tasks.map((t) => {
-            const onRemoveHandler = () => props.removeTask(props.todolistId, t.id,);
+            const onRemoveHandler   = () => props.removeTask(props.todolistId, t.id,);
 
             const onStatusChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                 props.changeTaskStatus(props.todolistId, t.id, e.currentTarget.checked,)
@@ -48,45 +52,56 @@ const TodoList = (props: PropsType) => {
 
             return (
 
-                <li key={t.id} className={`${t.isDone && styles.isDone}`}>
-                    <input type="checkbox"
-                           checked={t.isDone}
-                           onChange={onStatusChangeHandler}/>
+                <div key={t.id} className={`${t.isDone && styles.isDone}`}>
+                    <Checkbox
+                        style={{color: "#c7f774"}}
+                        checked={t.isDone}
+                        onChange={onStatusChangeHandler}
+                    />
                     <EditableSpanTitle title={t.taskTitle} onChangeTitle={onChangeTitleHandler}/>
-                    <Button title={"x"} onClikCallback={onRemoveHandler}/>
-                </li>
+                    <IconButton aria-label="delete"  onClick={onRemoveHandler}>
+                        <DeleteOutline style={{color: "#6b7d84"}} fontSize={"small"}/>
+                    </IconButton>
+                </div>
             )
         }) :
         <span>Your task list is empty</span>
 
-    // let isDisabled = error !== null && true;
 
-    //JSX
+//JSX
     return (
         <div>
             <h3>
                 <EditableSpanTitle title={props.title} onChangeTitle={onChangeTodolistTitleHandler}/>
+                <IconButton aria-label="delete" onClick={removeTodolistHandler}>
+                    <DeleteOutlined style={{color: "#6b7d84"}}/>
+                </IconButton>
             </h3>
-            <Button title={"x"} onClikCallback={removeTodolistHandler}/>
             <div>
                 <AddItemForm addItem={addTask}/>
             </div>
-            <ul>
-                {tasksList}
-            </ul>
             <div>
-                <Button title={"All"} className={`${props.filter === ALL && "active-filter"}`}
-                        onClikCallback={onFilterClickHandler(ALL)}
-                />
-                <Button title={"Active"} className={`${props.filter === ACTIVE && "active-filter"}`}
-                        onClikCallback={onFilterClickHandler(ACTIVE)}
-                />
-                <Button title={"Completed"} className={`${props.filter === COMPLETED && "active-filter"}`}
-                        onClikCallback={onFilterClickHandler(COMPLETED)}
-                />
+                {tasksList}
             </div>
             <div>
-                <Button title={"undo"} onClikCallback={props.setPrevState}/>
+                <Button
+                    variant={`${props.filter === ALL ? "contained" : "text"}`}
+                    onClick={onFilterClickHandler(ALL)}
+                >All</Button>
+                <Button
+                    variant={`${props.filter === ACTIVE ? "contained" : "text"}`}
+                    onClick={onFilterClickHandler(ACTIVE)}
+                    color={"secondary"}
+                >Active</Button>
+                <Button
+                    variant={`${props.filter === COMPLETED ? "contained" : "text"}`}
+                    onClick={onFilterClickHandler(COMPLETED)}
+                    size={"small"}
+                    color={"success"}
+                >Completed</Button>
+            </div>
+            <div>
+                {/*<Button title={"undo"} onClikCallback={props.setPrevState}/>*/}
             </div>
         </div>
     )

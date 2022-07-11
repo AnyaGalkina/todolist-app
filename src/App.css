@@ -1,6 +1,7 @@
 .App {
-    padding: 30px;
-    display: flex;
+    /*background-color: #242e41;*/
+    /*background-color: #607d8b;*/
+    color: white;
 }
 
 .App > div {
