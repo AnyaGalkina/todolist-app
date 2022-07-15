@@ -1,11 +1,9 @@
 import React, {ChangeEvent} from "react";
 import {ACTIVE, ALL, COMPLETED, FilterValuesType, TaskType} from "../App";
 import styles from "./TodoList.module.css";
-// import Button from "./Button/Button";
 import AddItemForm from "./Input/AddItemForm";
 import EditableSpanTitle from "./EditableSpanTitle";
 import {Button, Checkbox, IconButton} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import {DeleteOutline, DeleteOutlined} from "@mui/icons-material";
 
 type PropsType = {
