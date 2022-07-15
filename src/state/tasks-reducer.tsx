@@ -1,11 +1,12 @@
-import {TasksType} from "../App";
 import {v1} from "uuid";
-import {ADD_TODOLIST, REMOVE_TODOLISTID,  RemoveTodolistType,  AddTodolistType } from "./todolist-reducer";
-
-export const REMOVE_TASK = "REMOVE_TASK";
-export const CHANGE_TASK_STATUS = "CHANGE_TASK_STATUS";
-export const CHANGE_TASK_TITLE = "CHANGE_TASK_TITLE";
-export const ADD_TASK = "ADD_TASK";
+import {
+    ADD_TODOLIST,
+    REMOVE_TODOLISTID,
+    RemoveTodolistType,
+    AddTodolistType,
+    todoListId2,
+    todoListId1
+} from "./todolists-reducer";
 
 type ActionType = RemoveTaskType | ChangeTaskStatusType | ChangeTaskTitleType | AddTaskType |  AddTodolistType  | RemoveTodolistType;
 
@@ -14,8 +15,41 @@ type ChangeTaskStatusType = ReturnType<typeof changeTaskStatusAC>;
 type ChangeTaskTitleType = ReturnType<typeof changeTaskTitleAC>;
 type AddTaskType = ReturnType<typeof addTaskAC>
 
+export type TaskType = {
+    id: string;
+    taskTitle: string;
+    isDone: boolean
+}
 
-export const TaskReducer = (state: TasksType, action: ActionType ): TasksType => {
+export type TasksType = {
+    [key: string]: Array<TaskType>
+}
+
+export const REMOVE_TASK = "REMOVE_TASK";
+export const CHANGE_TASK_STATUS = "CHANGE_TASK_STATUS";
+export const CHANGE_TASK_TITLE = "CHANGE_TASK_TITLE";
+export const ADD_TASK = "ADD_TASK";
+
+
+
+const initalState: TasksType = {
+    [todoListId1]: [
+        {id: v1(), taskTitle: "HTML&CSS", isDone: true},
+        {id: v1(), taskTitle: "JS", isDone: true},
+        {id: v1(), taskTitle: "React", isDone: true},
+        {id: v1(), taskTitle: "Storybook", isDone: false},
+        {id: v1(), taskTitle: "Git", isDone: false},
+        {id: v1(), taskTitle: "Routing", isDone: false},
+    ],
+    [todoListId2]: [
+        {id: v1(), taskTitle: "Advanced open water diving", isDone: true},
+        {id: v1(), taskTitle: "Ride a car", isDone: true},
+        {id: v1(), taskTitle: "Ride a motorbike", isDone: false},
+    ]
+}
+
+export const TasksReducer = (state: TasksType = initalState, action: ActionType ): TasksType => {
+     debugger
     switch (action.type) {
         case REMOVE_TASK :
             return {
