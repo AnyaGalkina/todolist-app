@@ -1,10 +1,12 @@
 import React, {ChangeEvent} from "react";
-import {ACTIVE, ALL, COMPLETED, FilterValuesType, TaskType} from "../App";
+import {FilterValuesType} from "../App";
 import styles from "./TodoList.module.css";
 import AddItemForm from "./Input/AddItemForm";
 import EditableSpanTitle from "./EditableSpanTitle";
 import {Button, Checkbox, IconButton} from "@mui/material";
 import {DeleteOutline, DeleteOutlined} from "@mui/icons-material";
+import {TaskType} from "../state/tasks-reducer";
+import {ACTIVE, ALL, COMPLETED} from "../state/todolists-reducer";
 
 type PropsType = {
     todolistId: string;
