@@ -1,13 +1,12 @@
-import {TasksType} from "../App";
 import {
     addTaskAC,
     changeTaskStatusAC,
     changeTaskTitleAC,
     removeTaskAC,
-    TaskReducer
-} from "./task-reducer";
+    TasksReducer, TasksType
+} from "./tasks-reducer";
 
-import {addTodolistAC, removeTodolistAC} from "./todolist-reducer";
+import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
 
 let state: TasksType;
 
@@ -29,7 +28,7 @@ beforeEach(() => {
 
 
 test("task should be removed from correct array", () => {
-    let newState = TaskReducer(state, removeTaskAC("1", "4"))
+    let newState = TasksReducer(state, removeTaskAC("1", "4"))
 
     expect(newState["1"].length).toBe(2);
     expect(newState["2"].length).toBe(3);
@@ -40,7 +39,7 @@ test("task should be removed from correct array", () => {
 
 
 test("task status should be changed to false", () => {
-    let newState = TaskReducer(state, changeTaskStatusAC("2", "4", false))
+    let newState = TasksReducer(state, changeTaskStatusAC("2", "4", false))
 
 
     expect(newState["2"][1].isDone).toBeFalsy();
@@ -51,7 +50,7 @@ test("task status should be changed to false", () => {
 
 
 test("task title should be changed", () => {
-    let newState = TaskReducer(state, changeTaskTitleAC("1", "5", "NodeJS"))
+    let newState = TasksReducer(state, changeTaskTitleAC("1", "5", "NodeJS"))
 
     expect(newState["1"][2].taskTitle).toBe("NodeJS");
     expect(newState["2"][2].taskTitle).toBe(  "Ride a car");
@@ -59,7 +58,7 @@ test("task title should be changed", () => {
 })
 
 test("task should be added", () => {
-    let newState = TaskReducer(state, addTaskAC("2", "Snowboarding"))
+    let newState = TasksReducer(state, addTaskAC("2", "Snowboarding"))
 
     expect(newState["2"].length).toBe(4);
     expect(newState["2"][3].id).toBeDefined();
@@ -70,7 +69,7 @@ test("task should be added", () => {
 })
 
 test("todolist should be added", () => {
-    let newState = TaskReducer(state, addTodolistAC("3", "some title"))
+    let newState = TasksReducer(state, addTodolistAC("3", "some title"))
 
     expect(newState["3"]).toBeDefined();
     expect(newState["3"].length).toBe(0);
@@ -82,7 +81,7 @@ test("todolist should be added", () => {
 
 
 test("todolist should be removed", () => {
-    let newState = TaskReducer(state, removeTodolistAC("1"))
+    let newState = TasksReducer(state, removeTodolistAC("1"))
 
     const keys = Object.keys(newState);
 
