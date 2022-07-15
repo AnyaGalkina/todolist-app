@@ -7,8 +7,8 @@ export const CHANGE_FILTER = "CHANGE_FILTER";
 
 type ActionType = ChangeTodolistTitleType | RemoveTodolistType |  AddTodolistType | ChangeFilterType;
 type ChangeTodolistTitleType = ReturnType<typeof changeTodolistTitleAC>;
-type RemoveTodolistType = ReturnType<typeof removeTodolistAC>;
-type AddTodolistType = ReturnType<typeof  addTodolistAC>;
+export type RemoveTodolistType = ReturnType<typeof removeTodolistAC>;
+export type AddTodolistType = ReturnType<typeof  addTodolistAC>;
 type ChangeFilterType = ReturnType<typeof changeFilterAC>;
 
 export const TodolistReducer = (state: Array<TodolistType>, action: ActionType): Array<TodolistType> => {
@@ -25,8 +25,9 @@ export const TodolistReducer = (state: Array<TodolistType>, action: ActionType):
         case REMOVE_TODOLISTID:
             return state.filter(t => t.id !== action.payload.todolistId);
         case ADD_TODOLIST:
-            return [...state,
-                {id: action.payload.newTodolistId, title: action.payload.title, filter: ALL }
+            return [
+                {id: action.payload.newTodolistId, title: action.payload.title, filter: ALL },
+                ...state
             ];
         default:
             return state;

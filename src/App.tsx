@@ -7,9 +7,9 @@ import Header from "./components/Header/Header";
 import Container from "@mui/material/Container";
 import {Grid, Paper} from "@mui/material";
 import {
-    addTaskAC, addTodolistToTasksAC,
+    addTaskAC,
     changeTaskStatusAC, changeTaskTitleAC,
-    removeTaskAC, removeTodolistTromTasksAC, TaskReducer
+    removeTaskAC, TaskReducer
 } from "./state/task-reducer";
 import {
     changeFilterAC, changeTodolistTitleAC,
@@ -42,33 +42,11 @@ function App() {
     const todoListId1 = v1();
     const todoListId2 = v1();
 
-    // const [todolists, setTodolists] = useState<Array<TodolistType>>([
-    //     {id: todoListId1, title: "Learn in Front End", filter: ALL},
-    //     {id: todoListId2, title: "New skills", filter: ALL}
-    // ]);
-
-    // const [tasks, setTasks] = useState<TasksType>({
-    //         [todoListId1]: [
-    //             {id: v1(), taskTitle: "HTML&CSS", isDone: true},
-    //             {id: v1(), taskTitle: "JS", isDone: true},
-    //             {id: v1(), taskTitle: "React", isDone: true},
-    //             {id: v1(), taskTitle: "Storybook", isDone: false},
-    //             {id: v1(), taskTitle: "Git", isDone: false},
-    //             {id: v1(), taskTitle: "Routing", isDone: false},
-    //         ],
-    //         [todoListId2]: [
-    //             {id: v1(), taskTitle: "Advanced open water diving", isDone: true},
-    //             {id: v1(), taskTitle: "Ride a car", isDone: true},
-    //             {id: v1(), taskTitle: "Ride a motorbike", isDone: false},
-    //         ]
-    //     }
-    // );
-
-    const [todolists, dispatchTodolists] = useReducer(TodolistReducer, [
+    const [todolists, dispatchToTodolistsReducer] = useReducer(TodolistReducer, [
         {id: todoListId1, title: "Learn in Front End", filter: ALL},
         {id: todoListId2, title: "New skills", filter: ALL}
     ]);
-    const [tasks, dispatchTasks] = useReducer(TaskReducer, {
+    const [tasks, dispatchToTasksReducers] = useReducer(TaskReducer, {
             [todoListId1]: [
                 {id: v1(), taskTitle: "HTML&CSS", isDone: true},
                 {id: v1(), taskTitle: "JS", isDone: true},
@@ -90,39 +68,39 @@ function App() {
 
     const removeTask = (todolistId: string, taskId: string) => {
         setPreviousState(tasks);
-        dispatchTasks(removeTaskAC(todolistId, taskId));
+        dispatchToTasksReducers(removeTaskAC(todolistId, taskId));
         // setTasks({...tasks, [todolistId]: tasks[todolistId].filter((t: TaskType) => t.id !== taskId)});
     }
 
     const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
         setPreviousState(tasks);
-        dispatchTasks(changeTaskStatusAC(todolistId, taskId, isDone))
+        dispatchToTasksReducers(changeTaskStatusAC(todolistId, taskId, isDone))
         // setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)});
     }
 
     const changeTaskTitle = (todolistId: string, taskId: string, taskTitle: string) => {
         setPreviousState(tasks);
-        dispatchTasks(changeTaskTitleAC(todolistId, taskId, taskTitle));
+        dispatchToTasksReducers(changeTaskTitleAC(todolistId, taskId, taskTitle));
         // setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, taskTitle} : t)});
     }
 
     const addTask = (todolistId: string, taskTitle: string) => {
         // let newTask = {id: v1(), taskTitle: taskTitle, isDone: false};
         setPreviousState(tasks);
-        dispatchTasks(addTaskAC(todolistId, taskTitle));
+        dispatchToTasksReducers(addTaskAC(todolistId, taskTitle));
         // setTasks({...tasks, [todolistId]: [...tasks[todolistId], newTask]});
     }
 
     const removeTodolist = (todolistId: string) => {
-        dispatchTodolists(removeTodolistAC(todolistId));
-        delete tasks[todolistId];
-        dispatchTasks(removeTodolistTromTasksAC(todolistId));
+        dispatchToTodolistsReducer(removeTodolistAC(todolistId));
+        // delete tasks[todolistId];
+        dispatchToTasksReducers(removeTodolistAC(todolistId));
         // setTasks({...tasks})
         //!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 
     const changeTodolistTitle = (todolistID: string, title: string) => {
-        dispatchTodolists(changeTodolistTitleAC(todolistID, title));
+        dispatchToTodolistsReducer(changeTodolistTitleAC(todolistID, title));
         // setTodolists(todolists.map(tl => tl.id === todolistID ? {...tl, title} : tl))
     }
 
@@ -132,13 +110,13 @@ function App() {
 
     const addTodolist = (title: string) => {
         let newTodolistId = v1();
-        dispatchTasks(addTodolistToTasksAC(newTodolistId))
-        dispatchTodolists(addTodolistAC(newTodolistId, title));
+        dispatchToTasksReducers(addTodolistAC(newTodolistId, title))
+        dispatchToTodolistsReducer(addTodolistAC(newTodolistId, title));
         // setTasks({...tasks, [newTodolistId]: []});
         // setTodolists([...todolists, {id: newTodolistId, title, filter: ALL}])
     }
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
-        dispatchTodolists(changeFilterAC(todolistId, filter));
+        dispatchToTodolistsReducer(changeFilterAC(todolistId, filter));
         // setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, filter: value} : tl));
     }
 

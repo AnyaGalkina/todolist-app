@@ -1,22 +1,18 @@
 import {TasksType} from "../App";
 import {v1} from "uuid";
-import {ADD_TODOLIST} from "./todolist-reducer";
+import {ADD_TODOLIST, REMOVE_TODOLISTID,  RemoveTodolistType,  AddTodolistType } from "./todolist-reducer";
 
 export const REMOVE_TASK = "REMOVE_TASK";
 export const CHANGE_TASK_STATUS = "CHANGE_TASK_STATUS";
 export const CHANGE_TASK_TITLE = "CHANGE_TASK_TITLE";
 export const ADD_TASK = "ADD_TASK";
-export const ADD_TODOLIST_TO_TASKS = "ADD_TODOLIST_TO_TASKS";
-export const REMOVE_TODOLIST_FROM_TASKS = 'REMOVE_TODOLIST_FROM_TASKS';
 
-type ActionType = RemoveTaskType | ChangeTaskStatusType | ChangeTaskTitleType | AddTaskType | AddTodolistToTasksType | RemoveTodolistTromTasksType ;
+type ActionType = RemoveTaskType | ChangeTaskStatusType | ChangeTaskTitleType | AddTaskType |  AddTodolistType  | RemoveTodolistType;
 
 type RemoveTaskType = ReturnType<typeof removeTaskAC>;
 type ChangeTaskStatusType = ReturnType<typeof changeTaskStatusAC>;
 type ChangeTaskTitleType = ReturnType<typeof changeTaskTitleAC>;
 type AddTaskType = ReturnType<typeof addTaskAC>
-type AddTodolistToTasksType = ReturnType<typeof addTodolistToTasksAC>
-type RemoveTodolistTromTasksType = ReturnType<typeof removeTodolistTromTasksAC>
 
 
 export const TaskReducer = (state: TasksType, action: ActionType ): TasksType => {
@@ -42,15 +38,17 @@ export const TaskReducer = (state: TasksType, action: ActionType ): TasksType =>
             let newTask = {id: v1(), taskTitle: action.payload.taskTitle, isDone: false};
             return {
                 ...state,
-                [action.payload.todolistId]: [...state[action.payload.todolistId], newTask]
+                [action.payload.todolistId]: [newTask, ...state[action.payload.todolistId]],
             };
-        case ADD_TODOLIST_TO_TASKS:
+        case ADD_TODOLIST:
             return {
-                ...state, [action.payload.newTodolistId]: []
+                [action.payload.newTodolistId]: [],
+                ...state
             };
-        case REMOVE_TODOLIST_FROM_TASKS:
-            delete state[action.payload.todolistId]
-            return {...state}
+        case REMOVE_TODOLISTID:
+            let newState = {...state}
+            delete newState[action.payload.todolistId]
+            return newState
         default:
             return state;
     }
@@ -100,20 +98,3 @@ export const addTaskAC = (todolistId: string, taskTitle: string) => {
     } as const
 }
 
-export const addTodolistToTasksAC = (newTodolistId: string) => {
-    return {
-        type: ADD_TODOLIST_TO_TASKS,
-        payload: {
-            newTodolistId
-        }
-    } as const
-}
-
-export const removeTodolistTromTasksAC = (todolistId: string) => {
-    return {
-        type: REMOVE_TODOLIST_FROM_TASKS,
-        payload: {
-            todolistId
-        }
-    } as const
-}

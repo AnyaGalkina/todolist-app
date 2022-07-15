@@ -1,6 +1,13 @@
 import {TasksType} from "../App";
-import {ADD_TASK, CHANGE_TASK_STATUS, CHANGE_TASK_TITLE, REMOVE_TASK, TaskReducer} from "./task-reducer";
-import {ADD_TODOLIST} from "./todolist-reducer";
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    TaskReducer
+} from "./task-reducer";
+
+import {addTodolistAC, removeTodolistAC} from "./todolist-reducer";
 
 let state: TasksType;
 
@@ -8,75 +15,79 @@ beforeEach(() => {
 
     state = {
         ["1"]: [
-            {id: "4", taskTitle: "HTML&CSS", isDone: true},
-            {id: "90", taskTitle: "JS", isDone: true},
-            {id: "70", taskTitle: "React", isDone: true},
+            {id: "3", taskTitle: "HTML&CSS", isDone: true},
+            {id: "4", taskTitle: "JS", isDone: true},
+            {id: "5", taskTitle: "React", isDone: true},
         ],
         ["2"]: [
-            {id: "77", taskTitle: "Advanced open water diving", isDone: true},
-            {id: "28", taskTitle: "Ride a motorbike", isDone: true},
+            {id: "3", taskTitle: "Advanced open water diving", isDone: true},
+            {id: "4", taskTitle: "Ride a motorbike", isDone: true},
+            {id: "5", taskTitle: "Ride a car", isDone: true},
         ]
     }
 })
 
 
-test("task should be removed", () => {
-    let newState = TaskReducer(state, {type: REMOVE_TASK, payload: {todolistId: "1", taskId: "90"}});
+test("task should be removed from correct array", () => {
+    let newState = TaskReducer(state, removeTaskAC("1", "4"))
 
     expect(newState["1"].length).toBe(2);
-    expect(newState["1"][1].id !== "90").toBeTruthy();
-    expect(state["1"][1].id !== "90").toBeFalsy();
+    expect(newState["2"].length).toBe(3);
+    expect(newState["1"].every(t => t.id !== "4")).toBeTruthy();
+    expect(state["1"].every(t => t.id !== "4")).toBeFalsy();
     expect(state["1"].length).toBe(3);
-    // expect(newState['2'] === state['2']).toBeFalsy();
 })
 
 
 test("task status should be changed to false", () => {
-    let newState = TaskReducer(state, {
-        type: CHANGE_TASK_STATUS,
-        payload: {todolistId: "2", taskId: "28", isDone: false}
-    })
+    let newState = TaskReducer(state, changeTaskStatusAC("2", "4", false))
+
 
     expect(newState["2"][1].isDone).toBeFalsy();
-    expect(newState["2"][1].taskTitle).toBe("Ride a motorbike");
-    expect(newState["2"].length).toBe(2);
+    expect(newState["1"][1].isDone).toBeTruthy();
+    // expect(newState["2"][1].taskTitle).toBe("Ride a motorbike");
     expect(state["2"][1].isDone).toBeTruthy();
-    // expect(newState['1'][2] === state['1'][2]).toBeFalsy();
 })
 
 
 test("task title should be changed", () => {
-    let newState = TaskReducer(state, {
-        type: CHANGE_TASK_TITLE,
-        payload: {todolistId: "1", taskId: "70", taskTitle: "NodeJS"}
-    })
+    let newState = TaskReducer(state, changeTaskTitleAC("1", "5", "NodeJS"))
+
     expect(newState["1"][2].taskTitle).toBe("NodeJS");
-    expect(newState["1"][2].isDone).toBeTruthy();
-    expect(newState["1"].length).toBe(3);
+    expect(newState["2"][2].taskTitle).toBe(  "Ride a car");
     expect(state["1"][2].taskTitle).toBe("React");
 })
 
 test("task should be added", () => {
-    let newState = TaskReducer(state, {
-        type: ADD_TASK,
-        payload: {todolistId: "2", taskTitle: "Snowboarding"}
-    })
-    expect(newState["2"].length).toBe(3);
-    expect(newState["2"][2].taskTitle).toBe("Snowboarding");
+    let newState = TaskReducer(state, addTaskAC("2", "Snowboarding"))
+
+    expect(newState["2"].length).toBe(4);
+    expect(newState["2"][3].id).toBeDefined();
+    expect(newState["2"][0].taskTitle).toBe("Snowboarding");
+    expect(newState["2"][0].isDone).toBe(false);
     expect(newState["1"].length).toBe(3);
-    expect(state["2"].length).toBe(2);
+    expect(state["2"].length).toBe(3);
 })
 
-test("todolist should b e added", () => {
-    let newState = TaskReducer(state, {
-        type: ADD_TODOLIST,
-        payload: {newTodolistId: "3"}
-    })
+test("todolist should be added", () => {
+    let newState = TaskReducer(state, addTodolistAC("3", "some title"))
 
     expect(newState["3"]).toBeDefined();
     expect(newState["3"].length).toBe(0);
-    expect(newState["2"].length).toBe(2);
+    expect(newState["2"].length).toBe(3);
     expect(newState["1"].length).toBe(3);
     expect(state["3"]).toBeUndefined();
 
+})
+
+
+test("todolist should be removed", () => {
+    let newState = TaskReducer(state, removeTodolistAC("1"))
+
+    const keys = Object.keys(newState);
+
+    expect(newState["1"]).toBeUndefined();
+    expect(keys.length).toBe(1);
+    expect(newState["2"]).toBeDefined();
+    expect(state["1"]).toBeDefined();
 })
