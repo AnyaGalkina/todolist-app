@@ -69,13 +69,21 @@ test("task should be added", () => {
 })
 
 test("todolist should be added", () => {
-    let newState = TasksReducer(state, addTodolistAC("3", "some title"))
+    let newState = TasksReducer(state, addTodolistAC( "some title"))
 
-    expect(newState["3"]).toBeDefined();
-    expect(newState["3"].length).toBe(0);
+    const keys = Object.keys(newState);
+    const newKey = keys.find( k => k !== "1" && k !== "2");
+    if (!newKey) {
+        throw Error('new key should be added')
+    }
+
+    expect(keys.length).toBe(3);
+    expect(newState[newKey]).toEqual([]);
+    expect(newState[newKey]).toBeDefined();
+    expect(newState[newKey].length).toBe(0);
     expect(newState["2"].length).toBe(3);
     expect(newState["1"].length).toBe(3);
-    expect(state["3"]).toBeUndefined();
+    expect(state[newKey]).toBeUndefined();
 
 })
 

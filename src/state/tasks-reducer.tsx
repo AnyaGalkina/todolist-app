@@ -31,7 +31,6 @@ export const CHANGE_TASK_TITLE = "CHANGE_TASK_TITLE";
 export const ADD_TASK = "ADD_TASK";
 
 
-
 const initalState: TasksType = {
     [todoListId1]: [
         {id: v1(), taskTitle: "HTML&CSS", isDone: true},
@@ -80,6 +79,10 @@ export const TasksReducer = (state: TasksType = initalState, action: ActionType 
                 ...state
             };
         case REMOVE_TODOLISTID:
+            // const copy = {...state}
+            // const {[action.payload.id]: remove, ...rest} = copy;
+            //or!!! const {[action.payload.id]: [], ...rest} = copy;
+            // return {...rest}
             let newState = {...state}
             delete newState[action.payload.todolistId]
             return newState
