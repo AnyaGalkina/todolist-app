@@ -1,21 +1,12 @@
 import React from "react";
 import "./App.css";
 import TodoList from "./components/TodoList";
-import {v1} from "uuid";
 import AddItemForm from "./components/Input/AddItemForm";
 import Header from "./components/Header/Header";
 import Container from "@mui/material/Container";
 import {Grid, Paper} from "@mui/material";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksType,} from "./state/tasks-reducer";
-import {
-    changeFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
-    addTodolistAC,
-    TodolistType,
-    ACTIVE,
-    COMPLETED,
-} from "./state/todolists-reducer";
+import {TasksType,} from "./state/tasks-reducer";
+import {ACTIVE, addTodolistAC, changeFilterAC, COMPLETED, TodolistType,} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 
@@ -31,42 +22,42 @@ function App() {
 
     // let [previousState, setPreviousState] = useState(tasks);
 
-    const removeTask = (todolistId: string, taskId: string) => {
-        // setPreviousState(tasks);
-        dispatch(removeTaskAC(todolistId, taskId));
-    }
+    // const removeTask = (todolistId: string, taskId: string) => {
+    //     // setPreviousState(tasks);
+    //     dispatch(removeTaskAC(todolistId, taskId));
+    // }
 
-    const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
-        // setPreviousState(tasks);
-        dispatch(changeTaskStatusAC(todolistId, taskId, isDone))
-    }
+    // const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
+    //     // setPreviousState(tasks);
+    //     dispatch(changeTaskStatusAC(todolistId, taskId, isDone))
+    // }
+    //
+    // const changeTaskTitle = (todolistId: string, taskId: string, taskTitle: string) => {
+    //     // setPreviousState(tasks);
+    //     dispatch(changeTaskTitleAC(todolistId, taskId, taskTitle));
+    // }
 
-    const changeTaskTitle = (todolistId: string, taskId: string, taskTitle: string) => {
-        // setPreviousState(tasks);
-        dispatch(changeTaskTitleAC(todolistId, taskId, taskTitle));
-    }
+    // const addTask = (todolistId: string, taskTitle: string) => {
+    //     // setPreviousState(tasks);
+    //     dispatch(addTaskAC(todolistId, taskTitle));
+    // }
 
-    const addTask = (todolistId: string, taskTitle: string) => {
-        // setPreviousState(tasks);
-        dispatch(addTaskAC(todolistId, taskTitle));
-    }
+    // const removeTodolist = (todolistId: string) => {
+    //     dispatch(removeTodolistAC(todolistId));
+    // }
 
-    const removeTodolist = (todolistId: string) => {
-        dispatch(removeTodolistAC(todolistId));
-    }
-
-    const changeTodolistTitle = (todolistID: string, title: string) => {
-        dispatch(changeTodolistTitleAC(todolistID, title));
-    }
+    // const changeTodolistTitle = (todolistID: string, title: string) => {
+    //     dispatch(changeTodolistTitleAC(todolistID, title));
+    // }
 
     const setPrevState = () => {
         // setTasks(previousState);
     }
 
     const addTodolist = (title: string) => {
-        let newTodolistId = v1();
-        dispatch(addTodolistAC(newTodolistId, title))
+        dispatch(addTodolistAC(title))
     }
+
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
         dispatch(changeFilterAC(todolistId, filter));
     }
@@ -98,14 +89,14 @@ function App() {
                                         title={tl.title}
                                         tasks={tasksForToDoList}
                                         changeFilter={changeFilter}
-                                        removeTask={removeTask}
-                                        addTask={addTask}
-                                        setPrevState={setPrevState}
-                                        changeTaskStatus={changeTaskStatus}
-                                        removeTodolist={removeTodolist}
+                                        // removeTask={removeTask}
+                                        // addTask={addTask}
+                                        // setPrevState={setPrevState}
+                                        // changeTaskStatus={changeTaskStatus}
+                                        // removeTodolist={removeTodolist}
                                         filter={tl.filter}
-                                        changeTitle={changeTaskTitle}
-                                        changeTodolistTitle={changeTodolistTitle}
+                                        // changeTitle={changeTaskTitle}
+                                        // changeTodolistTitle={changeTodolistTitle}
                                     />
                                 </Paper>
                             </Grid>
