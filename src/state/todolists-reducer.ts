@@ -35,7 +35,6 @@ const initialState: Array<TodolistType>  = [
 ]
 
 export const TodolistsReducer = (state: Array<TodolistType> =  initialState, action: ActionType): Array<TodolistType> => {
-    debugger
     switch (action.type) {
         case CHANGE_TODOLIST_TITLE:
             return state.map(t => t.id === action.payload.todolistId
