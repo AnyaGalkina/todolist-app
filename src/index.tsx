@@ -6,6 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {Provider} from "react-redux";
 import {store} from "./state/store";
+import {HashRouter} from "react-router-dom";
 
 const theme = createTheme({
     palette: {
@@ -24,12 +25,14 @@ const theme = createTheme({
 })
 
 ReactDOM.render(
-    <Provider store={store}>
-    <ThemeProvider theme={theme}>
-        <CssBaseline/>
-            <App/>
-    </ThemeProvider>
-    </Provider>
+    <HashRouter>
+        <Provider store={store}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                <App/>
+            </ThemeProvider>
+        </Provider>
+    </HashRouter>
     ,
     document.getElementById("root"));
 
