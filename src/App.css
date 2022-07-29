@@ -2,10 +2,6 @@
     color: white;
 }
 
-.App > div {
-    margin-right: 50px;
-}
-
 .active-filter {
     background-color: slategrey;
     color: white;
