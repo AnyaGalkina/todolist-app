@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import "./App.css";
 import TodoList from "./components/TodoList";
 import AddItemForm from "./components/Input/AddItemForm";
@@ -21,9 +21,9 @@ function App() {
         // setTasks(previousState);
     }
 
-    const addTodolist = (title: string) => {
+    const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
-    }
+    }, []);
 
 
     return (

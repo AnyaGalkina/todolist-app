@@ -6,7 +6,7 @@ type PropsType = {
 }
 
 
-const AddItemForm: React.FC<PropsType> = (props) => {
+const AddItemForm = React.memo((props: PropsType) => {
     const [newTaskTitle, setNewTaskTitle] = useState("");
     const [error, setError] = useState<string | null>(null);
 
@@ -25,7 +25,6 @@ const AddItemForm: React.FC<PropsType> = (props) => {
         setNewTaskTitle("");
     }
     let onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        // setError(null);
         e.key === "Enter" && addItem();
     }
 
@@ -39,7 +38,6 @@ const AddItemForm: React.FC<PropsType> = (props) => {
                        onChange={onChangeHandler}
                        onKeyPress={onKeyDownHandler}
                        error={!!error}
-                // helperText={error}
                        label={error ? "Title is required" : "Title"}
                        style={{color: "white"}}
             />
@@ -62,6 +60,6 @@ const AddItemForm: React.FC<PropsType> = (props) => {
         </div>
     )
         ;
-};
+});
 
 export default AddItemForm;

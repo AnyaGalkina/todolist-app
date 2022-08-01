@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {FilterValuesType} from "../App";
 import styles from "./TodoList.module.css";
 import AddItemForm from "./Input/AddItemForm";
@@ -28,7 +28,8 @@ type PropsType = {
 }
 
 
-const TodoList = ({todolist}: PropsType) => {
+const TodoList = React.memo(({todolist}: PropsType) => {
+    console.log("Todo list")
     const {title, id: todolistId, filter} = todolist;
     const dispatch = useDispatch();
     let tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[todolistId]);
@@ -40,17 +41,15 @@ const TodoList = ({todolist}: PropsType) => {
         dispatch(removeTodolistAC(todolistId));
     }
 
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(todolistId, title));
-    }
+    }, []);
     const onChangeTodolistTitleHandler = (title: string) => {
         dispatch(changeTodolistTitleAC(todolistId, title));
         console.log(title);
     }
 
     let tasksForToDoList = tasks;
-
-    debugger
     switch (filter) {
         case ACTIVE:
             tasksForToDoList = tasks.filter(t => !t.isDone)
@@ -130,6 +129,6 @@ const TodoList = ({todolist}: PropsType) => {
             </div>
         </div>
     )
-}
+});
 
 export default TodoList;
