@@ -10,7 +10,8 @@ function TextArea(props: { onBlur: () => void, onKeyDown: (event: React.Keyboard
     return null;
 }
 
-const EditableSpanTitle: React.FC<PropsType> = (props) => {
+const EditableSpanTitle: React.FC<PropsType> = React.memo((props) => {
+   console.log("editable span");
     const [editMode, setEditMode] = useState(false);
     const [title, setTitle] = useState(props.title);
 
@@ -45,6 +46,6 @@ const EditableSpanTitle: React.FC<PropsType> = (props) => {
             />
             : <span onDoubleClick ={activateEditMode}>{props.title}</span>
     );
-};
+});
 
 export default EditableSpanTitle;
