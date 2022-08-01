@@ -22,6 +22,7 @@ import {
 } from "../state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../state/store";
+import {Task} from "./Task/Task";
 
 type PropsType = {
     todolist: TodolistType;
@@ -34,20 +35,21 @@ const TodoList = React.memo(({todolist}: PropsType) => {
     const dispatch = useDispatch();
     let tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[todolistId]);
 
-    const onFilterClickHandler = (filter: FilterValuesType) => {
+    const onFilterClickHandler = useCallback((filter: FilterValuesType) => {
         return () => dispatch(changeFilterAC(todolistId, filter));
-    }
+    },[dispatch, filter])
+
     const removeTodolistHandler = () => {
         dispatch(removeTodolistAC(todolistId));
     }
 
     const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(todolistId, title));
-    }, []);
-    const onChangeTodolistTitleHandler = (title: string) => {
+    }, [dispatch]);
+
+    const onChangeTodolistTitleHandler = useCallback((title: string) => {
         dispatch(changeTodolistTitleAC(todolistId, title));
-        console.log(title);
-    }
+    }, [title, dispatch])
 
     let tasksForToDoList = tasks;
     switch (filter) {
@@ -62,31 +64,31 @@ const TodoList = React.memo(({todolist}: PropsType) => {
 
     let tasksList = tasks.length ?
         tasksForToDoList.map((t) => {
-            const onRemoveHandler = () => {
-                dispatch(removeTaskAC(todolistId, t.id));
-            };
-
-            const onStatusChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                dispatch(changeTaskStatusAC(todolistId, t.id, e.currentTarget.checked))
-            }
-            const onChangeTitleHandler = (newTitle: string) => {
-                dispatch(changeTaskTitleAC(todolistId, t.id, newTitle))
-            }
+            // const onRemoveHandler = () => {
+            //     dispatch(removeTaskAC(todolistId, t.id));
+            // };
+            //
+            // const onStatusChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+            //     dispatch(changeTaskStatusAC(todolistId, t.id, e.currentTarget.checked))
+            // }
+            // const onChangeTitleHandler = (newTitle: string) => {
+            //     dispatch(changeTaskTitleAC(todolistId, t.id, newTitle))
+            // }
 
 
             return (
-
-                <div key={t.id} className={`${t.isDone && styles.isDone}`}>
-                    <Checkbox
-                        style={{color: "#c7f774"}}
-                        checked={t.isDone}
-                        onChange={onStatusChangeHandler}
-                    />
-                    <EditableSpanTitle title={t.taskTitle} onChangeTitle={onChangeTitleHandler}/>
-                    <IconButton aria-label="delete" onClick={onRemoveHandler}>
-                        <DeleteOutline style={{color: "#6b7d84"}} fontSize={"small"}/>
-                    </IconButton>
-                </div>
+                <Task key={t.id} task={t} todolistId={todolistId}/>
+                // <div key={t.id} className={`${t.isDone && styles.isDone}`}>
+                //     <Checkbox
+                //         style={{color: "#c7f774"}}
+                //         checked={t.isDone}
+                //         onChange={onStatusChangeHandler}
+                //     />
+                //     <EditableSpanTitle title={t.taskTitle} onChangeTitle={onChangeTitleHandler}/>
+                //     <IconButton aria-label="delete" onClick={onRemoveHandler}>
+                //         <DeleteOutline style={{color: "#6b7d84"}} fontSize={"small"}/>
+                //     </IconButton>
+                // </div>
             )
         }) :
         <span>Your task list is empty</span>
@@ -132,3 +134,4 @@ const TodoList = React.memo(({todolist}: PropsType) => {
 });
 
 export default TodoList;
+
