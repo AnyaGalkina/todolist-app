@@ -3,7 +3,7 @@ import {
     changeTaskStatusAC,
     changeTaskTitleAC,
     removeTaskAC,
-    TasksReducer, TasksType
+    tasksReducer, TasksType
 } from "./tasks-reducer";
 
 import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
@@ -28,7 +28,7 @@ beforeEach(() => {
 
 
 test("task should be removed from correct array", () => {
-    let newState = TasksReducer(state, removeTaskAC("1", "4"))
+    let newState = tasksReducer(state, removeTaskAC("1", "4"))
 
     expect(newState["1"].length).toBe(2);
     expect(newState["2"].length).toBe(3);
@@ -39,7 +39,7 @@ test("task should be removed from correct array", () => {
 
 
 test("task status should be changed to false", () => {
-    let newState = TasksReducer(state, changeTaskStatusAC("2", "4", false))
+    let newState = tasksReducer(state, changeTaskStatusAC("2", "4", false))
 
 
     expect(newState["2"][1].isDone).toBeFalsy();
@@ -50,7 +50,7 @@ test("task status should be changed to false", () => {
 
 
 test("task title should be changed", () => {
-    let newState = TasksReducer(state, changeTaskTitleAC("1", "5", "NodeJS"))
+    let newState = tasksReducer(state, changeTaskTitleAC("1", "5", "NodeJS"))
 
     expect(newState["1"][2].taskTitle).toBe("NodeJS");
     expect(newState["2"][2].taskTitle).toBe(  "Ride a car");
@@ -58,7 +58,7 @@ test("task title should be changed", () => {
 })
 
 test("task should be added", () => {
-    let newState = TasksReducer(state, addTaskAC("2", "Snowboarding"))
+    let newState = tasksReducer(state, addTaskAC("2", "Snowboarding"))
 
     expect(newState["2"].length).toBe(4);
     expect(newState["2"][3].id).toBeDefined();
@@ -69,7 +69,7 @@ test("task should be added", () => {
 })
 
 test("todolist should be added", () => {
-    let newState = TasksReducer(state, addTodolistAC( "some title"))
+    let newState = tasksReducer(state, addTodolistAC( "some title"))
 
     const keys = Object.keys(newState);
     const newKey = keys.find( k => k !== "1" && k !== "2");
@@ -89,7 +89,7 @@ test("todolist should be added", () => {
 
 
 test("todolist should be removed", () => {
-    let newState = TasksReducer(state, removeTodolistAC("1"))
+    let newState = tasksReducer(state, removeTodolistAC("1"))
 
     const keys = Object.keys(newState);
 

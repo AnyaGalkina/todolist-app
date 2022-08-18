@@ -34,7 +34,7 @@ const initialState: Array<TodolistType>  = [
     {id: todoListId2, title: "New skills", filter: ALL}
 ]
 
-export const TodolistsReducer = (state: Array<TodolistType> =  initialState, action: ActionType): Array<TodolistType> => {
+export const todolistsReducer = (state: Array<TodolistType> =  initialState, action: ActionType): Array<TodolistType> => {
     switch (action.type) {
         case CHANGE_TODOLIST_TITLE:
             return state.map(t => t.id === action.payload.todolistId
