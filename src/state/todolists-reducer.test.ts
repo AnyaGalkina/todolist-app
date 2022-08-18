@@ -1,19 +1,19 @@
 import {
     ACTIVE,
     addTodolistAC, ALL, changeFilterAC, changeTodolistTitleAC,
-    removeTodolistAC, todolistsReducer, TodolistType
+    removeTodolistAC, todolistsReducer, TodolistDomainType
 } from "./todolists-reducer";
 
-let state:  Array<TodolistType>
+let state: Array<TodolistDomainType>
 beforeEach(() => {
-    state= [
-        {id: "1", title: "Learn in Front End", filter: ALL},
-        {id: "2", title: "New skills", filter: ALL}
+    state = [
+        {id: "1", title: "Learn in Front End", filter: ALL, addedDate: "", order: 0},
+        {id: "2", title: "New skills", filter: ALL, addedDate: "", order: 0}
     ]
 });
 
 test("filter should be changed to 'active'", () => {
-    let newState = todolistsReducer(state, changeFilterAC("1", ACTIVE ))
+    let newState = todolistsReducer(state, changeFilterAC("1", ACTIVE))
 
     expect(newState[0].filter).toBe(ACTIVE);
     expect(newState.length).toBe(2);
@@ -21,7 +21,7 @@ test("filter should be changed to 'active'", () => {
 })
 
 test("title should be changed", () => {
-    let newState = todolistsReducer(state, changeTodolistTitleAC( "2", "What to buy"))
+    let newState = todolistsReducer(state, changeTodolistTitleAC("2", "What to buy"))
 
     expect(newState[1].title).toBe("What to buy");
     expect(newState.length).toBe(2);
@@ -30,7 +30,7 @@ test("title should be changed", () => {
 
 
 test("new todolist should be added", () => {
-    let newState = todolistsReducer(state, addTodolistAC("Movies to watch" ) )
+    let newState = todolistsReducer(state, addTodolistAC("Movies to watch"))
 
     expect(newState.length).toBe(3);
     expect(newState[0].title).toBe("Movies to watch");

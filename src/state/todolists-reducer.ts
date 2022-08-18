@@ -1,19 +1,17 @@
-import {FilterValuesType} from "../App";
 import {v1} from "uuid";
+import {TodolistType} from "../api/todolistsAPI";
 
-type ActionType = ChangeTodolistTitleType | RemoveTodolistType |  AddTodolistType | ChangeFilterType;
+type ActionType = ChangeTodolistTitleType | RemoveTodolistType | AddTodolistType | ChangeFilterType;
 type ChangeTodolistTitleType = ReturnType<typeof changeTodolistTitleAC>;
 export type RemoveTodolistType = ReturnType<typeof removeTodolistAC>;
-export type AddTodolistType = ReturnType<typeof  addTodolistAC>;
+export type AddTodolistType = ReturnType<typeof addTodolistAC>;
 type ChangeFilterType = ReturnType<typeof changeFilterAC>;
 
-export type TodolistType = {
-    id: string;
-    title: string;
+export type FilterValuesType = "all" | "active" | "completed";
+
+export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
 }
-
-
 
 export const CHANGE_TODOLIST_TITLE = "CHANGE_TODOLIST_TITLE"
 export const REMOVE_TODOLISTID = "REMOVE_TODOLISTID";
@@ -29,27 +27,27 @@ export const todoListId1 = v1();
 export const todoListId2 = v1();
 
 
-const initialState: Array<TodolistType>  = [
-    {id: todoListId1, title: "Learn in Front End", filter: ALL},
-    {id: todoListId2, title: "New skills", filter: ALL}
+const initialState: Array<TodolistDomainType> = [
+    {id: todoListId1, title: "Learn in Front End", filter: ALL,   addedDate: "", order: 0},
+    {id: todoListId2, title: "New skills", filter: ALL, addedDate: "", order: 0}
 ]
 
-export const todolistsReducer = (state: Array<TodolistType> =  initialState, action: ActionType): Array<TodolistType> => {
+export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionType): Array<TodolistDomainType> => {
     switch (action.type) {
         case CHANGE_TODOLIST_TITLE:
             return state.map(t => t.id === action.payload.todolistId
-                    ? {...t, title: action.payload.title}
-                    : t);
+                ? {...t, title: action.payload.title}
+                : t);
         case CHANGE_FILTER:
-            return state.map( t => t.id === action.payload.todolistId
-            ? {...t, filter: action.payload.filter}
-            : t
+            return state.map(t => t.id === action.payload.todolistId
+                ? {...t, filter: action.payload.filter}
+                : t
             );
         case REMOVE_TODOLISTID:
             return state.filter(t => t.id !== action.payload.todolistId);
         case ADD_TODOLIST:
             return [
-                {id: action.payload.newTodolistId, title: action.payload.title, filter: ALL },
+                {id: action.payload.newTodolistId, title: action.payload.title, filter: ALL, addedDate: "", order: 0},
                 ...state
             ];
         default:
@@ -58,7 +56,7 @@ export const todolistsReducer = (state: Array<TodolistType> =  initialState, act
 }
 
 
-export const changeTodolistTitleAC = (todolistId: string,  title: string) => {
+export const changeTodolistTitleAC = (todolistId: string, title: string) => {
     return {
         type: CHANGE_TODOLIST_TITLE,
         payload: {
@@ -74,10 +72,10 @@ export const removeTodolistAC = (todolistId: string) => {
         payload: {
             todolistId
         }
-    }as const
+    } as const
 }
 
-export const addTodolistAC = ( title: string) => {
+export const addTodolistAC = (title: string) => {
     return {
         type: ADD_TODOLIST,
         payload: {

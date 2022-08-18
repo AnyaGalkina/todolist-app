@@ -6,7 +6,7 @@ const instance = axios.create({
     headers: {"api-key": "8cb31c3e-5e62-4d4f-945f-025b0014bebf"}
 });
 
-type TodolistType = {
+export type TodolistType = {
     id: string;
     addedDate: string;
     order: number;
@@ -25,9 +25,24 @@ type CommonResType<T = {}> = {
 }
 
 export type TaskGetResType = {
-	items: DataType<TaskType>[];
-	totalCount: number;
-	error?: string;
+    items: DataType<TaskType>[];
+    totalCount: number;
+    error?: string;
+}
+
+export enum TaskStatuses {
+    New = 0,
+    InProgress,
+    Completed,
+    Draft
+}
+
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4
 }
 
 export type TaskType = {
@@ -36,8 +51,8 @@ export type TaskType = {
     description?: string;
     todoListId: string;
     order: number;
-    status: number;
-    priority: number;
+    status: TaskStatuses;
+    priority: TaskPriorities;
     startDate?: string;
     deadline?: string;
     addedDate: string;
@@ -48,8 +63,8 @@ type TaskTypeReq = {
     title: string;
     description: string;
     completed: boolean;
-    status: number;
-    priority: number;
+    status: TaskStatuses;
+    priority: TaskPriorities;
     startDate: string;
     deadline: string;
 }
@@ -70,14 +85,14 @@ export const todolistsAPI = {
     getTasks(todolistId: string) {
         return instance.get<TaskGetResType>(`/todo-lists/${todolistId}/tasks`);
     },
-    createTask(p: { todolistId: string, title: string}) {
+    createTask(p: { todolistId: string, title: string }) {
         return instance.post<CommonResType<DataType<TaskType>>>(`/todo-lists/${p.todolistId}/tasks`, {title: p.title});
     },
-    updateTask(payload: {todolistId: string, taskId: string, task: TaskTypeReq }
+    updateTask(payload: { todolistId: string, taskId: string, task: TaskTypeReq }
     ) {
         return instance.put<CommonResType>(`/todo-lists/${payload.todolistId}/tasks/${payload.taskId}`, {...payload.task});
     },
-    deleteTask(payload: { todolistId: string, taskId: string}) {
+    deleteTask(payload: { todolistId: string, taskId: string }) {
         return instance.delete<CommonResType>(`/todo-lists/${payload.todolistId}/tasks/${payload.taskId}`);
     }
 }

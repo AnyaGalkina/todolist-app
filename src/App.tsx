@@ -5,17 +5,16 @@ import AddItemForm from "./components/Input/AddItemForm";
 import Header from "./components/Header/Header";
 import Container from "@mui/material/Container";
 import {Grid, Paper} from "@mui/material";
-import {addTodolistAC, TodolistType,} from "./state/todolists-reducer";
+import {addTodolistAC, TodolistDomainType} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 
 
-export type FilterValuesType = "all" | "active" | "completed";
 
 
 function App() {
     const dispatch = useDispatch();
-    const todolists = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists);
+    const todolists = useSelector<AppRootState, Array<TodolistDomainType>>(state => state.todolists);
 
     const setPrevState = () => {
         // setTasks(previousState);
@@ -36,7 +35,7 @@ function App() {
                     />
                 </Grid>
                 <Grid container spacing={3}>
-                    {todolists.map((tl: TodolistType) => {
+                    {todolists.map((tl: TodolistDomainType) => {
                         return (
                             <Grid item key={tl.id}>
                                 <Paper style={{padding: "20px", width: "300px"}}>

@@ -6,7 +6,8 @@ import {
     tasksReducer, TasksType
 } from "./tasks-reducer";
 
-import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
+import {addTodolistAC, removeTodolistAC, todoListId2} from "./todolists-reducer";
+import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
 
 let state: TasksType;
 
@@ -14,14 +15,74 @@ beforeEach(() => {
 
     state = {
         ["1"]: [
-            {id: "3", taskTitle: "HTML&CSS", isDone: true},
-            {id: "4", taskTitle: "JS", isDone: true},
-            {id: "5", taskTitle: "React", isDone: true},
+            {
+                id: "3", title: "HTML&CSS",
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Hi,
+                startDate: "",
+                addedDate: "",
+                deadline: "",
+                description: "",
+                order: 0,
+                todoListId: "1"
+            },
+            {
+                id: "4", title: "JS",
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Hi,
+                startDate: "",
+                addedDate: "",
+                deadline: "",
+                description: "",
+                order: 0,
+                todoListId: "1"
+            },
+            {
+                id: "5", title: "React",
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Hi,
+                startDate: "",
+                addedDate: "",
+                deadline: "",
+                description: "",
+                order: 0,
+                todoListId: "1"
+            },
         ],
         ["2"]: [
-            {id: "3", taskTitle: "Advanced open water diving", isDone: true},
-            {id: "4", taskTitle: "Ride a motorbike", isDone: true},
-            {id: "5", taskTitle: "Ride a car", isDone: true},
+            {
+                id: "3", title: "Advanced open water diving",
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Hi,
+                startDate: "",
+                addedDate: "",
+                deadline: "",
+                description: "",
+                order: 0,
+                todoListId: "2"
+            },
+            {
+                id: "4", title: "Ride a motorbike",
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Hi,
+                startDate: "",
+                addedDate: "",
+                deadline: "",
+                description: "",
+                order: 0,
+                todoListId: "2"
+            },
+            {
+                id: "5", title: "Ride a car",
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Hi,
+                startDate: "",
+                addedDate: "",
+                deadline: "",
+                description: "",
+                order: 0,
+                todoListId: "2"
+            },
         ]
     }
 })
@@ -38,23 +99,23 @@ test("task should be removed from correct array", () => {
 })
 
 
-test("task status should be changed to false", () => {
-    let newState = tasksReducer(state, changeTaskStatusAC("2", "4", false))
+test("task status should be changed to Completed", () => {
+    let newState = tasksReducer(state, changeTaskStatusAC("2", "4", TaskStatuses.Completed))
 
 
-    expect(newState["2"][1].isDone).toBeFalsy();
-    expect(newState["1"][1].isDone).toBeTruthy();
+    expect(newState["2"][1].status).toBe( TaskStatuses.Completed);
+    expect(newState["1"][1].status).toBe(TaskStatuses.New);
     // expect(newState["2"][1].taskTitle).toBe("Ride a motorbike");
-    expect(state["2"][1].isDone).toBeTruthy();
+    // expect(state["2"][1].status).toBe();
 })
 
 
 test("task title should be changed", () => {
     let newState = tasksReducer(state, changeTaskTitleAC("1", "5", "NodeJS"))
 
-    expect(newState["1"][2].taskTitle).toBe("NodeJS");
-    expect(newState["2"][2].taskTitle).toBe(  "Ride a car");
-    expect(state["1"][2].taskTitle).toBe("React");
+    expect(newState["1"][2].title).toBe("NodeJS");
+    expect(newState["2"][2].title).toBe("Ride a car");
+    expect(state["1"][2].title).toBe("React");
 })
 
 test("task should be added", () => {
@@ -62,19 +123,20 @@ test("task should be added", () => {
 
     expect(newState["2"].length).toBe(4);
     expect(newState["2"][3].id).toBeDefined();
-    expect(newState["2"][0].taskTitle).toBe("Snowboarding");
-    expect(newState["2"][0].isDone).toBe(false);
+    expect(newState["2"][0].title).toBe("Snowboarding");
+    expect(newState["2"][0].status).toBe(TaskStatuses.New);
+    expect(newState["2"][0].priority).toBe(TaskPriorities.Middle);
     expect(newState["1"].length).toBe(3);
     expect(state["2"].length).toBe(3);
 })
 
 test("todolist should be added", () => {
-    let newState = tasksReducer(state, addTodolistAC( "some title"))
+    let newState = tasksReducer(state, addTodolistAC("some title"))
 
     const keys = Object.keys(newState);
-    const newKey = keys.find( k => k !== "1" && k !== "2");
+    const newKey = keys.find(k => k !== "1" && k !== "2");
     if (!newKey) {
-        throw Error('new key should be added')
+        throw Error("new key should be added")
     }
 
     expect(keys.length).toBe(3);

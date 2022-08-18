@@ -7,22 +7,22 @@ type PropsType = {
 
 
 const AddItemForm = React.memo((props: PropsType) => {
-    const [newTaskTitle, setNewTaskTitle] = useState("");
+    const [newItemTitle, setNewItemTitle] = useState("");
     const [error, setError] = useState<string | null>(null);
 
     let onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskTitle(e.currentTarget.value);
+        setNewItemTitle(e.currentTarget.value);
         error && setError(null);
     };
 
     let addItem = () => {
-        let trimedTask = newTaskTitle.trim();
-        if (trimedTask) {
-            props.addItem(newTaskTitle);
+        let trimedItem = newItemTitle.trim();
+        if (trimedItem) {
+            props.addItem(newItemTitle);
         } else {
             setError("Title is required");
         }
-        setNewTaskTitle("");
+        setNewItemTitle("");
     }
     let onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         e.key === "Enter" && addItem();
@@ -34,7 +34,7 @@ const AddItemForm = React.memo((props: PropsType) => {
         <div>
             <TextField variant="outlined"
 
-                       value={newTaskTitle}
+                       value={newItemTitle}
                        onChange={onChangeHandler}
                        onKeyPress={onKeyDownHandler}
                        error={!!error}
