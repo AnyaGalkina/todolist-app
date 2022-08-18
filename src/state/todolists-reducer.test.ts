@@ -1,7 +1,7 @@
 import {
     ACTIVE,
     addTodolistAC, ALL, changeFilterAC, changeTodolistTitleAC,
-    removeTodolistAC, TodolistsReducer, TodolistType
+    removeTodolistAC, todolistsReducer, TodolistType
 } from "./todolists-reducer";
 
 let state:  Array<TodolistType>
@@ -13,7 +13,7 @@ beforeEach(() => {
 });
 
 test("filter should be changed to 'active'", () => {
-    let newState = TodolistsReducer(state, changeFilterAC("1", ACTIVE ))
+    let newState = todolistsReducer(state, changeFilterAC("1", ACTIVE ))
 
     expect(newState[0].filter).toBe(ACTIVE);
     expect(newState.length).toBe(2);
@@ -21,7 +21,7 @@ test("filter should be changed to 'active'", () => {
 })
 
 test("title should be changed", () => {
-    let newState = TodolistsReducer(state, changeTodolistTitleAC( "2", "What to buy"))
+    let newState = todolistsReducer(state, changeTodolistTitleAC( "2", "What to buy"))
 
     expect(newState[1].title).toBe("What to buy");
     expect(newState.length).toBe(2);
@@ -30,7 +30,7 @@ test("title should be changed", () => {
 
 
 test("new todolist should be added", () => {
-    let newState = TodolistsReducer(state, addTodolistAC("Movies to watch" ) )
+    let newState = todolistsReducer(state, addTodolistAC("Movies to watch" ) )
 
     expect(newState.length).toBe(3);
     expect(newState[0].title).toBe("Movies to watch");
@@ -41,9 +41,8 @@ test("new todolist should be added", () => {
 
 })
 
-
 test("todolist should be removed", () => {
-    let newState = TodolistsReducer(state, removeTodolistAC("2"))
+    let newState = todolistsReducer(state, removeTodolistAC("2"))
 
     expect(newState.length).toBe(1);
     expect(newState[0].id).toBe("1");
