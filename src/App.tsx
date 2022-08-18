@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 import "./App.css";
-import TodoList from "./components/TodoList";
+import TodoList from "./components/Todolist/TodoList";
 import AddItemForm from "./components/Input/AddItemForm";
 import Header from "./components/Header/Header";
 import Container from "@mui/material/Container";
@@ -23,7 +23,7 @@ function App() {
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
-    }, []);
+    }, [dispatch]);
 
 
     return (

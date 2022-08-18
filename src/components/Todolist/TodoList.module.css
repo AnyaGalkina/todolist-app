@@ -6,12 +6,15 @@
     border: darkred 1px solid;
 }
 
-.isDone {
-    opacity: 0.4;
-    /*text-decoration: line-through;*/
-}
 
 .button {
 color:black;
     backgroundColor:yellow
+}
+
+.todolistTitle {
+    width: 260px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }

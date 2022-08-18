@@ -1,0 +1,14 @@
+.task {
+    width: 260px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.taskIsDone {
+    width: 260px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    opacity: 0.4;
+}

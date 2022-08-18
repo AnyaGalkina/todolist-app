@@ -1,10 +1,10 @@
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskType} from "../../state/tasks-reducer";
 import React, {ChangeEvent, useCallback} from "react";
-import styles from "../TodoList.module.css";
 import {Checkbox, IconButton} from "@mui/material";
-import EditableSpanTitle from "../EditableSpanTitle";
+import EditableSpanTitle from "../EditableSpan/EditableSpanTitle";
 import {DeleteOutline} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
+import styles from "./Task.module.css";
 
 
 type TaskPropsType = {
@@ -26,13 +26,16 @@ export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
     }, [todolistId, task.id, dispatch])
 
     return(
-        <div  className={`${task.isDone && styles.isDone}`}>
-            <Checkbox
-                style={{color: "#c7f774"}}
-                checked={task.isDone}
-                onChange={onStatusChangeHandler}
-            />
-            <EditableSpanTitle title={task.taskTitle} onChangeTitle={onChangeTitleHandler}/>
+        // <div  className={`${task.isDone ? styles.taskIsDone : styles.task}`}>
+        <div  className={styles.task}>
+            <div>
+                <Checkbox
+                    style={{color: "#c7f774"}}
+                    checked={task.isDone}
+                    onChange={onStatusChangeHandler}
+                />
+                <EditableSpanTitle title={task.taskTitle} onChangeTitle={onChangeTitleHandler}/>
+            </div>
             <IconButton aria-label="delete" onClick={onRemoveHandler}>
                 <DeleteOutline style={{color: "#6b7d84"}} fontSize={"small"}/>
             </IconButton>

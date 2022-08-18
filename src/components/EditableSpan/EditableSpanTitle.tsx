@@ -6,7 +6,8 @@ type PropsType = {
     onChangeTitle: (title: string) => void;
 }
 
-function TextArea(props: { onBlur: () => void, onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void, onChange: (event: React.ChangeEvent<HTMLInputElement>) => void, autoFocus: boolean, value: string }) {
+function TextArea(props: { onBlur: () => void, onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void, autoFocus: boolean, value: string }) {
     return null;
 }
 
