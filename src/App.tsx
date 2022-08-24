@@ -8,6 +8,7 @@ import {Grid, Paper} from "@mui/material";
 import {addTodolistAC, fetchTodolistsThunk, TodolistDomainType} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
+import {fetchTasksThunk} from "./state/tasks-reducer";
 
 
 
@@ -18,7 +19,7 @@ function App() {
 
     useEffect(() => {
         //@ts-ignore
-       dispatch(fetchTodolistsThunk())
+       dispatch(fetchTodolistsThunk());
     }, [])
 
     const setPrevState = () => {

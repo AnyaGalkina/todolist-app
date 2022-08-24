@@ -25,7 +25,7 @@ type CommonResType<T = {}> = {
 }
 
 export type TaskGetResType = {
-    items: DataType<TaskType>[];
+    items: DataType<TaskType[]>;
     totalCount: number;
     error?: string;
 }

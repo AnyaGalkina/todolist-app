@@ -5,14 +5,9 @@ import {
     todoListId2,
     todoListId1, SET_TODOLISTS
 } from "./todolists-reducer";
-import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolistsAPI";
+import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI} from "../api/todolistsAPI";
 import {ActionType} from "./store";
-
-// export type TaskType = {
-//     id: string;
-//     taskTitle: string;
-//     isDone: boolean
-// }
+import {Dispatch} from "redux";
 
 export type TasksType = {
     [key: string]: Array<TaskType>
@@ -136,10 +131,15 @@ export const tasksReducer = (state: TasksType = initalState, action: ActionType)
             return newState;
         case SET_TODOLISTS:
             let copeState = {...state}
-            action.payload.todolists.forEach( t => {
+            action.payload.todolists.forEach(t => {
                 copeState[t.id] = [];
             })
             return copeState
+        case SET_TASKS:
+            return {
+                ...state,
+                [action.payload.todolistId]: action.payload.tasks
+            };
         default:
             return state;
     }
@@ -189,12 +189,20 @@ export const addTaskAC = (todolistId: string, taskTitle: string) => {
     } as const
 }
 
-export const setTasksAC = (tasks: ) => {
+export const setTasksAC = (todolistId: string, tasks: Array<TaskType>) => {
     return {
         type: SET_TASKS,
         payload: {
-           tasks
+            todolistId,
+            tasks
         }
     } as const
 }
 
+export const fetchTasksThunk = (todolistId: string) => {
+    return (dispatch: Dispatch) => {
+        todolistsAPI.getTasks(todolistId).then(res => {
+            dispatch(setTasksAC(todolistId, res.data.items))
+        })
+    }
+}

@@ -6,7 +6,14 @@ import {
     removeTodolistAC, setTodolists,
     todolistsReducer
 } from "./todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./tasks-reducer";
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    setTasksAC,
+    tasksReducer
+} from "./tasks-reducer";
 import thunk from "redux-thunk";
 
 declare global {
@@ -23,7 +30,8 @@ export type ActionType = ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof removeTaskAC>
     | ReturnType<typeof changeTaskStatusAC>
     | ReturnType<typeof changeTaskTitleAC>
-    | ReturnType<typeof addTaskAC>;
+    | ReturnType<typeof addTaskAC>
+    | ReturnType<typeof setTasksAC>;
 
 
 export type AppRootState = ReturnType<typeof rootReducer>;

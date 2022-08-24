@@ -1,9 +1,9 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import AddItemForm from "../Input/AddItemForm";
 import EditableSpanTitle from "../EditableSpan/EditableSpanTitle";
 import {Button, IconButton} from "@mui/material";
 import {DeleteOutlined} from "@mui/icons-material";
-import {addTaskAC} from "../../state/tasks-reducer";
+import {addTaskAC, fetchTasksThunk} from "../../state/tasks-reducer";
 import {
     ACTIVE,
     ALL,
@@ -25,12 +25,16 @@ type PropsType = {
     todolist: TodolistDomainType;
 }
 
-
 const TodoList = React.memo(({todolist}: PropsType) => {
-    console.log("Todo list")
     const {title, id: todolistId, filter} = todolist;
     const dispatch = useDispatch();
     let tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[todolistId]);
+
+    useEffect(() => {
+        console.log("grt task" + todolistId)
+        // @ts-ignore
+        dispatch(fetchTasksThunk(todolistId));
+    }, []);
 
     const onFilterClickHandler = useCallback((filter: FilterValuesType) => {
         return () => dispatch(changeFilterAC(todolistId, filter));

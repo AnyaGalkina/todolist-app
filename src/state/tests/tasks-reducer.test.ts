@@ -2,7 +2,7 @@ import {
     addTaskAC,
     changeTaskStatusAC,
     changeTaskTitleAC,
-    removeTaskAC,
+    removeTaskAC, setTasksAC,
     tasksReducer, TasksType
 } from "../tasks-reducer";
 
@@ -87,6 +87,25 @@ beforeEach(() => {
     }
 })
 
+test("tasks should be updated for exact todolist id", () => {
+    let newTasksArr = [{
+        id: "6", title: "Move to other country",
+        status: TaskStatuses.New,
+        priority: TaskPriorities.Middle,
+        startDate: "",
+        addedDate: "",
+        deadline: "",
+        description: "",
+        order: 0,
+        todoListId: "2"
+    }]
+
+    let newState = tasksReducer(state, setTasksAC("2", newTasksArr))
+
+    expect(newState["2"].length).toBe(1);
+    expect(newState["2"][0].id).toBe("6");
+    expect(newState["2"][0].title).toBe("Move to other country");
+})
 
 test("task should be removed from correct array", () => {
     let newState = tasksReducer(state, removeTaskAC("1", "4"))
@@ -103,7 +122,7 @@ test("task status should be changed to Completed", () => {
     let newState = tasksReducer(state, changeTaskStatusAC("2", "4", TaskStatuses.Completed))
 
 
-    expect(newState["2"][1].status).toBe( TaskStatuses.Completed);
+    expect(newState["2"][1].status).toBe(TaskStatuses.Completed);
     expect(newState["1"][1].status).toBe(TaskStatuses.New);
     // expect(newState["2"][1].taskTitle).toBe("Ride a motorbike");
     // expect(state["2"][1].status).toBe();

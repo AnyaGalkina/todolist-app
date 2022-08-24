@@ -12,7 +12,6 @@ function TextArea(props: { onBlur: () => void, onKeyDown: (event: React.Keyboard
 }
 
 const EditableSpanTitle: React.FC<PropsType> = React.memo((props) => {
-   console.log("editable span");
     const [editMode, setEditMode] = useState(false);
     const [title, setTitle] = useState(props.title);
 

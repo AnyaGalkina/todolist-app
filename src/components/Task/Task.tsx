@@ -1,5 +1,5 @@
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../state/tasks-reducer";
-import React, {ChangeEvent, useCallback} from "react";
+import React, {ChangeEvent, useCallback, useEffect} from "react";
 import {Checkbox, IconButton} from "@mui/material";
 import EditableSpanTitle from "../EditableSpan/EditableSpanTitle";
 import {DeleteOutline} from "@mui/icons-material";
@@ -13,8 +13,8 @@ type TaskPropsType = {
     todolistId: string
 }
 export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
-    console.log("Task")
     const dispatch = useDispatch();
+
     const onRemoveHandler = () => {
         dispatch(removeTaskAC(todolistId, task.id));
     };
