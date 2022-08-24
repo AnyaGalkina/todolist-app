@@ -1,8 +1,8 @@
 import {
     ACTIVE,
     addTodolistAC, ALL, changeFilterAC, changeTodolistTitleAC,
-    removeTodolistAC, todolistsReducer, TodolistDomainType
-} from "./todolists-reducer";
+    removeTodolistAC, todolistsReducer, TodolistDomainType, setTodolists
+} from "../todolists-reducer";
 
 let state: Array<TodolistDomainType>
 beforeEach(() => {
@@ -11,6 +11,20 @@ beforeEach(() => {
         {id: "2", title: "New skills", filter: ALL, addedDate: "", order: 0}
     ]
 });
+
+test("todolist array should be set to state", () => {
+    let newTodoArr = [
+        {id: "3", title: "New Todolist", addedDate: "12.12.22", order: 1}
+    ]
+    let newState = todolistsReducer(state, setTodolists(newTodoArr));
+
+    expect(newState.length).toBe(1);
+    expect(newState[0].id).toBe("3");
+    expect(newState[0].filter).toBe(ALL);
+    expect(newState[0].title).toBe("New Todolist");
+    expect(newState[0].order).toBe(1);
+    expect(newState[0].addedDate).toBe("12.12.22");
+})
 
 test("filter should be changed to 'active'", () => {
     let newState = todolistsReducer(state, changeFilterAC("1", ACTIVE))

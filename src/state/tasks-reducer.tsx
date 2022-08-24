@@ -2,25 +2,11 @@ import {v1} from "uuid";
 import {
     ADD_TODOLIST,
     REMOVE_TODOLISTID,
-    RemoveTodolistType,
-    AddTodolistType,
     todoListId2,
-    todoListId1
+    todoListId1, SET_TODOLISTS
 } from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolistsAPI";
-
-type ActionType =
-    RemoveTaskType
-    | ChangeTaskStatusType
-    | ChangeTaskTitleType
-    | AddTaskType
-    | AddTodolistType
-    | RemoveTodolistType;
-
-type RemoveTaskType = ReturnType<typeof removeTaskAC>;
-type ChangeTaskStatusType = ReturnType<typeof changeTaskStatusAC>;
-type ChangeTaskTitleType = ReturnType<typeof changeTaskTitleAC>;
-type AddTaskType = ReturnType<typeof addTaskAC>
+import {ActionType} from "./store";
 
 // export type TaskType = {
 //     id: string;
@@ -32,10 +18,11 @@ export type TasksType = {
     [key: string]: Array<TaskType>
 }
 
-export const REMOVE_TASK = "REMOVE_TASK";
-export const CHANGE_TASK_STATUS = "CHANGE_TASK_STATUS";
-export const CHANGE_TASK_TITLE = "CHANGE_TASK_TITLE";
-export const ADD_TASK = "ADD_TASK";
+export const REMOVE_TASK = "app_todolist/tasksReducer/REMOVE_TASK";
+export const CHANGE_TASK_STATUS = "app_todolist/tasksReducer/CHANGE_TASK_STATUS";
+export const CHANGE_TASK_TITLE = "app_todolist/tasksReducer/CHANGE_TASK_TITLE";
+export const ADD_TASK = "app_todolist/tasksReducer/ADD_TASK";
+export const SET_TASKS = "app_todolist/tasksReducer/SET_TASKS";
 
 
 const initalState: TasksType = {
@@ -146,7 +133,13 @@ export const tasksReducer = (state: TasksType = initalState, action: ActionType)
             // return {...rest}
             let newState = {...state}
             delete newState[action.payload.todolistId]
-            return newState
+            return newState;
+        case SET_TODOLISTS:
+            let copeState = {...state}
+            action.payload.todolists.forEach( t => {
+                copeState[t.id] = [];
+            })
+            return copeState
         default:
             return state;
     }
@@ -192,6 +185,15 @@ export const addTaskAC = (todolistId: string, taskTitle: string) => {
         payload: {
             todolistId,
             taskTitle
+        }
+    } as const
+}
+
+export const setTasksAC = (tasks: ) => {
+    return {
+        type: SET_TASKS,
+        payload: {
+           tasks
         }
     } as const
 }

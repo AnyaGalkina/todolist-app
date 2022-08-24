@@ -1,11 +1,11 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import "./App.css";
 import TodoList from "./components/Todolist/TodoList";
 import AddItemForm from "./components/Input/AddItemForm";
 import Header from "./components/Header/Header";
 import Container from "@mui/material/Container";
 import {Grid, Paper} from "@mui/material";
-import {addTodolistAC, TodolistDomainType} from "./state/todolists-reducer";
+import {addTodolistAC, fetchTodolistsThunk, TodolistDomainType} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 
@@ -15,6 +15,11 @@ import {AppRootState} from "./state/store";
 function App() {
     const dispatch = useDispatch();
     const todolists = useSelector<AppRootState, Array<TodolistDomainType>>(state => state.todolists);
+
+    useEffect(() => {
+        //@ts-ignore
+       dispatch(fetchTodolistsThunk())
+    }, [])
 
     const setPrevState = () => {
         // setTasks(previousState);
