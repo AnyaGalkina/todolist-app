@@ -44,7 +44,11 @@ test("title should be changed", () => {
 
 
 test("new todolist should be added", () => {
-    let newState = todolistsReducer(state, addTodolistAC("Movies to watch"))
+
+    let newTodolist = {
+        id: "3", title: "Movies to watch", addedDate: "", order: 0
+    }
+    let newState = todolistsReducer(state, addTodolistAC(newTodolist))
 
     expect(newState.length).toBe(3);
     expect(newState[0].title).toBe("Movies to watch");
