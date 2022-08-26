@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect} from "react";
-import AddItemForm from "../Input/AddItemForm";
-import EditableSpanTitle from "../EditableSpan/EditableSpanTitle";
+import AddItemForm from "../../../components/AddItemForm/AddItemForm";
+import EditableSpanTitle from "../../../components/EditableSpan/EditableSpanTitle";
 import {Button, IconButton} from "@mui/material";
 import {DeleteOutlined} from "@mui/icons-material";
-import {addTaskThunk, getTasksThunk} from "../../state/tasks-reducer";
+import {addTaskThunk, getTasksThunk} from "../../../state/tasks-reducer";
 import {
     ACTIVE,
     ALL,
@@ -12,12 +12,12 @@ import {
     FilterValuesType, removeTodolistsThunk,
     TodolistDomainType,
     updateTodolistTitleThunk,
-} from "../../state/todolists-reducer";
+} from "../../../state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootState} from "../../state/store";
-import {Task} from "../Task/Task";
+import {AppRootState} from "../../../state/store";
+import {Task} from "./Task/Task";
 import styles from "./TodoList.module.css";
-import {TaskStatuses, TaskType} from "../../api/todolistsAPI";
+import {TaskStatuses, TaskType} from "../../../api/todolistsAPI";
 
 
 type PropsType = {

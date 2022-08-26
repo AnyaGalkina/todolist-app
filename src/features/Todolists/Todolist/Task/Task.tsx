@@ -1,11 +1,11 @@
-import {removeTaskThunk, updateTaskThunk} from "../../state/tasks-reducer";
+import {removeTaskThunk, updateTaskThunk} from "../../../../state/tasks-reducer";
 import React, {ChangeEvent, useCallback, useEffect} from "react";
 import {Checkbox, IconButton} from "@mui/material";
-import EditableSpanTitle from "../EditableSpan/EditableSpanTitle";
+import EditableSpanTitle from "../../../../components/EditableSpan/EditableSpanTitle";
 import {DeleteOutline} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import styles from "./Task.module.css";
-import {TaskStatuses, TaskType} from "../../api/todolistsAPI";
+import {TaskStatuses, TaskType} from "../../../../api/todolistsAPI";
 
 
 type TaskPropsType = {
