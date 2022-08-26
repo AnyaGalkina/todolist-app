@@ -6,6 +6,7 @@ import {DeleteOutline} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import styles from "./Task.module.css";
 import {TaskStatuses, TaskType} from "../../../../api/todolistsAPI";
+import {useAppDispatch} from "../../../../state/hooks";
 
 
 type TaskPropsType = {
@@ -13,7 +14,8 @@ type TaskPropsType = {
     todolistId: string
 }
 export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    // const dispatch = useDispatch();
 
     const onRemoveHandler = () => {
         dispatch(removeTaskThunk(todolistId, task.id));

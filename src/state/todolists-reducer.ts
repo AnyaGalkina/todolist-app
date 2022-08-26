@@ -56,28 +56,28 @@ export const setTodolists = (todolists: TodolistType[]) =>
     ({type: SET_TODOLISTS, payload: {todolists}} as const)
 
 //Thunks
-export const getTodolistsThunk = () => (dispatch: Dispatch) => {
+export const getTodolistsThunk = () => (dispatch: Dispatch<ActionType>) => {
     todolistsAPI.getTodolist()
         .then((res) => {
             dispatch(setTodolists(res.data))
         })
 }
 
-export const removeTodolistsThunk = (todolistId: string) => (dispatch: Dispatch) => {
+export const removeTodolistsThunk = (todolistId: string) => (dispatch: Dispatch<ActionType>) => {
     todolistsAPI.deleteTodolist(todolistId)
         .then((res) => {
             dispatch(removeTodolistAC(todolistId))
         })
 }
 
-export const addTodolistThunk = (title: string) => (dispatch: Dispatch) => {
+export const addTodolistThunk = (title: string) => (dispatch: Dispatch<ActionType>) => {
     todolistsAPI.createTodolist(title)
         .then((res) => {
             dispatch(addTodolistAC(res.data.data.item))
         })
 }
 
-export const updateTodolistTitleThunk = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+export const updateTodolistTitleThunk = (todolistId: string, title: string) => (dispatch: Dispatch<ActionType>) => {
     todolistsAPI.updateTodolistTitle({todolistId, title})
         .then((res) => {
             dispatch((changeTodolistTitleAC(todolistId, title)))

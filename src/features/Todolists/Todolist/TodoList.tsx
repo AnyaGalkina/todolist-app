@@ -18,6 +18,7 @@ import {AppRootState} from "../../../state/store";
 import {Task} from "./Task/Task";
 import styles from "./TodoList.module.css";
 import {TaskStatuses, TaskType} from "../../../api/todolistsAPI";
+import {useAppDispatch} from "../../../state/hooks";
 
 
 type PropsType = {
@@ -26,8 +27,9 @@ type PropsType = {
 
 const TodoList = React.memo(({todolist}: PropsType) => {
     const {title, id: todolistId, filter} = todolist;
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     let tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[todolistId]);
+    const dispatch = useAppDispatch();
 
 
     const onFilterClickHandler = useCallback((filter: FilterValuesType) => {
@@ -44,12 +46,8 @@ const TodoList = React.memo(({todolist}: PropsType) => {
 
     const onChangeTodolistTitleHandler = useCallback((title: string) => {
         dispatch(updateTodolistTitleThunk(todolistId, title))
-        // dispatch(changeTodolistTitleAC(todolistId, title));
     }, [title, dispatch])
 
-    // const onChangeTodolistTitleHandler = useCallback((title: string) => {
-    //     dispatch(changeTodolistTitleAC(todolistId, title));
-    // }, [dispatch])
 
     let tasksForToDoList = tasks;
     switch (filter) {
