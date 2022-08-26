@@ -16,7 +16,7 @@ export const todolistsAPI = {
         return instance.post<"", AxiosResponse<CommonResType<DataType<TodolistType>>>, { title: string }>("/todo-lists", {title});
     },
     updateTodolistTitle(payload: { todolistId: string, title: string }) {
-        return instance.put<"", AxiosResponse<CommonResType>, { title: string }>(`/${payload.todolistId}`, {title: payload.title})
+        return instance.put<"", AxiosResponse<CommonResType>, { title: string }>(`/todo-lists/${payload.todolistId}`, {title: payload.title})
     },
     deleteTodolist(todolistId: string) {
         return instance.delete<CommonResType>(`/todo-lists/${todolistId}`);
@@ -27,9 +27,10 @@ export const todolistsAPI = {
     createTask(p: { todolistId: string, title: string }) {
         return instance.post<CommonResType<DataType<TaskType>>>(`/todo-lists/${p.todolistId}/tasks`, {title: p.title});
     },
-    updateTask(payload: { todolistId: string, taskId: string, task: TaskTypeReq }
+    updateTask(payload: { todolistId: string, taskId: string, model: UpdateModel }
     ) {
-        return instance.put<CommonResType>(`/todo-lists/${payload.todolistId}/tasks/${payload.taskId}`, {...payload.task});
+        debugger
+        return instance.put<CommonResType<DataType<TaskType>>>(`/todo-lists/${payload.todolistId}/tasks/${payload.taskId}`, {...payload.model});
     },
     deleteTask(payload: { todolistId: string, taskId: string }) {
         return instance.delete<CommonResType>(`/todo-lists/${payload.todolistId}/tasks/${payload.taskId}`);
@@ -90,10 +91,10 @@ export type TaskType = {
 }
 
 
-type TaskTypeReq = {
+type UpdateModel = {
     title: string;
     description: string;
-    completed: boolean;
+    // completed: boolean;
     status: TaskStatuses;
     priority: TaskPriorities;
     startDate: string;
