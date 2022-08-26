@@ -3,16 +3,15 @@ import AddItemForm from "../Input/AddItemForm";
 import EditableSpanTitle from "../EditableSpan/EditableSpanTitle";
 import {Button, IconButton} from "@mui/material";
 import {DeleteOutlined} from "@mui/icons-material";
-import {addTaskAC, fetchTasksThunk} from "../../state/tasks-reducer";
+import {addTaskThunk, getTasksThunk} from "../../state/tasks-reducer";
 import {
     ACTIVE,
     ALL,
     changeFilterAC,
-    changeTodolistTitleAC,
     COMPLETED,
-    FilterValuesType,
-    removeTodolistAC,
+    FilterValuesType, removeTodolistsThunk,
     TodolistDomainType,
+    updateTodolistTitleThunk,
 } from "../../state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../../state/store";
@@ -30,31 +29,27 @@ const TodoList = React.memo(({todolist}: PropsType) => {
     const dispatch = useDispatch();
     let tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[todolistId]);
 
-    useEffect(() => {
-        console.log("grt task" + todolistId)
-        // @ts-ignore
-        dispatch(fetchTasksThunk(todolistId));
-    }, []);
 
     const onFilterClickHandler = useCallback((filter: FilterValuesType) => {
         return () => dispatch(changeFilterAC(todolistId, filter));
     }, [dispatch, filter])
 
     const removeTodolistHandler = () => {
-        dispatch(removeTodolistAC(todolistId));
+        dispatch(removeTodolistsThunk(todolistId))
     }
 
     const addTask = useCallback((title: string) => {
-        dispatch(addTaskAC(todolistId, title));
+        dispatch(addTaskThunk({todolistId, title}));
     }, [dispatch]);
+
+    const onChangeTodolistTitleHandler = useCallback((title: string) => {
+        dispatch(updateTodolistTitleThunk(todolistId, title))
+        // dispatch(changeTodolistTitleAC(todolistId, title));
+    }, [title, dispatch])
 
     // const onChangeTodolistTitleHandler = useCallback((title: string) => {
     //     dispatch(changeTodolistTitleAC(todolistId, title));
-    // }, [title, dispatch])
-
-    const onChangeTodolistTitleHandler = useCallback((title: string) => {
-        dispatch(changeTodolistTitleAC(todolistId, title));
-    }, [dispatch])
+    // }, [dispatch])
 
     let tasksForToDoList = tasks;
     switch (filter) {
@@ -70,11 +65,15 @@ const TodoList = React.memo(({todolist}: PropsType) => {
     let tasksList = tasks.length ?
         tasksForToDoList.map((t) => {
             return (
-                    <Task key={t.id} task={t} todolistId={todolistId}/>
+                <Task key={t.id} task={t} todolistId={todolistId}/>
             )
         }) :
         <span>Your task list is empty</span>
 
+
+    useEffect(() => {
+        dispatch(getTasksThunk(todolistId));
+    }, []);
 
 //JSX
     return (

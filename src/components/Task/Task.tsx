@@ -1,4 +1,4 @@
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../state/tasks-reducer";
+import {removeTaskThunk, updateTaskThunk} from "../../state/tasks-reducer";
 import React, {ChangeEvent, useCallback, useEffect} from "react";
 import {Checkbox, IconButton} from "@mui/material";
 import EditableSpanTitle from "../EditableSpan/EditableSpanTitle";
@@ -16,15 +16,15 @@ export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
     const dispatch = useDispatch();
 
     const onRemoveHandler = () => {
-        dispatch(removeTaskAC(todolistId, task.id));
+        dispatch(removeTaskThunk(todolistId, task.id));
     };
 
     const onStatusChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let status = task.status === TaskStatuses.Completed ? TaskStatuses.New : TaskStatuses.Completed
-        dispatch(changeTaskStatusAC(todolistId, task.id, status))
+        dispatch(updateTaskThunk(todolistId, task.id, {status}))
     }
     const onChangeTitleHandler = useCallback((newTitle: string) => {
-        dispatch(changeTaskTitleAC(todolistId, task.id, newTitle))
+        dispatch(updateTaskThunk(todolistId, task.id, {title: newTitle}))
     }, [todolistId, task.id, dispatch])
 
     return (
