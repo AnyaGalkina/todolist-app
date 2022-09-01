@@ -1,11 +1,11 @@
-import {ActionType} from "../state/types/types";
-
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
 
 export type InitialStateType = {
     status: RequestStatusType;
     error: string | null;
 }
+
+export type AppActionsType = ReturnType<typeof setAppErrorAC> | ReturnType<typeof setAppStatusAC>;;
 
 const SET_STATUS = "APP/SET_STATUS";
 const SET_ERROR = "APP/SET_ERROR";
@@ -15,7 +15,7 @@ const initialState: InitialStateType = {
     error: null
 }
 
-export const appReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+export const appReducer = (state: InitialStateType = initialState, action: AppActionsType): InitialStateType => {
     switch (action.type) {
         case SET_STATUS:
         case SET_ERROR:
@@ -25,5 +25,5 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
     }
 }
 
-export const setStatusAC = (status: RequestStatusType) => ({type: SET_STATUS, payload: {status}} as const);
-export const setErrorAC = (error: string | null) => ({type: SET_ERROR, payload: {error}} as const);
+export const setAppStatusAC = (status: RequestStatusType) => ({type: SET_STATUS, payload: {status}} as const);
+export const setAppErrorAC = (error: string | null) => ({type: SET_ERROR, payload: {error}} as const);

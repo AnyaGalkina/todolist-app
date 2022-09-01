@@ -3,6 +3,7 @@ import {Button, TextField} from "@mui/material";
 
 type PropsType = {
     addItem: (title: string) => void;
+    disabled: boolean
 }
 
 
@@ -40,6 +41,7 @@ const AddItemForm = React.memo((props: PropsType) => {
                        error={!!error}
                        label={error ? "Title is required" : "Title"}
                        style={{color: "white"}}
+                       disabled={props.disabled}
             />
             {/*<input*/}
             {/*    className={`${error && styles.error}`}*/}
@@ -51,7 +53,7 @@ const AddItemForm = React.memo((props: PropsType) => {
                 variant={"contained"}
                 style={{maxWidth: "30px", maxHeight: "30px", minWidth: "30px", minHeight: "30px"}}
                 onClick={addItem}
-                disabled={error !== null && true}
+                disabled={error !== null || props.disabled && true}
             >+</Button>
 
             {

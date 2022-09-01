@@ -26,7 +26,7 @@ type PropsType = {
 }
 
 const TodoList = React.memo(({todolist}: PropsType) => {
-    const {title, id: todolistId, filter} = todolist;
+    const {title, id: todolistId, filter, entityStatus} = todolist;
     // const dispatch = useDispatch();
     let tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[todolistId]);
     const dispatch = useAppDispatch();
@@ -48,6 +48,7 @@ const TodoList = React.memo(({todolist}: PropsType) => {
         dispatch(updateTodolistTitleThunk(todolistId, title))
     }, [title, dispatch])
 
+    const isDisabled = entityStatus === "loading";
 
     let tasksForToDoList = tasks;
     switch (filter) {
@@ -70,6 +71,7 @@ const TodoList = React.memo(({todolist}: PropsType) => {
 
 
     useEffect(() => {
+        debugger
         dispatch(getTasksThunk(todolistId));
     }, []);
 
@@ -78,12 +80,12 @@ const TodoList = React.memo(({todolist}: PropsType) => {
         <div>
             <h3 className={styles.todolistTitle}>
                 <EditableSpanTitle title={title} onChangeTitle={onChangeTodolistTitleHandler}/>
-                <IconButton aria-label="delete" onClick={removeTodolistHandler}>
+                <IconButton aria-label="delete" onClick={removeTodolistHandler} disabled={isDisabled}>
                     <DeleteOutlined style={{color: "#6b7d84"}}/>
                 </IconButton>
             </h3>
             <div>
-                <AddItemForm addItem={addTask}/>
+                <AddItemForm addItem={addTask} disabled={isDisabled }/>
             </div>
             <div>
                 {tasksList}

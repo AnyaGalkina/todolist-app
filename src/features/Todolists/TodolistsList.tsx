@@ -10,7 +10,6 @@ import {useAppDispatch} from "../../state/hooks";
 
 export const TodolistList = () => {
     const todolists = useSelector<AppRootState, Array<TodolistDomainType>>(state => state.todolists);
-    // const dispatch = useDispatch();
     const dispatch = useAppDispatch();
 
     const setPrevState = () => {
@@ -28,7 +27,7 @@ export const TodolistList = () => {
 
     return <>
         <Grid container style={{padding: "20px"}}>
-            <AddItemForm addItem={addTodolist}/>
+            <AddItemForm addItem={addTodolist} disabled={false}/>
         </Grid>
         <Grid container spacing={3}>
             {todolists.map((tl: TodolistDomainType) => {
