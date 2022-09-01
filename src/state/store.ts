@@ -3,6 +3,7 @@ import {todolistsReducer} from "./todolists-reducer";
 import {tasksReducer} from "./tasks-reducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {ActionType} from "./types/types";
+import {appReducer} from "../app/app-reducer";
 
 declare global {
     interface Window {
@@ -18,7 +19,8 @@ export type AppDispatch = ThunkDispatch<AppRootState, unknown, ActionType>
 
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
-    tasks: tasksReducer
+    tasks: tasksReducer,
+    app: appReducer,
 });
 
 

@@ -6,6 +6,7 @@ const instance = axios.create({
     headers: {"api-key": "8cb31c3e-5e62-4d4f-945f-025b0014bebf"}
 });
 
+// applyMiddleware(thunk)
 
 export const todolistsAPI = {
     getTodolist() {

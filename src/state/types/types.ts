@@ -11,6 +11,7 @@ import {
     setTasksAC,
     updateTaskAC
 } from "../tasks-reducer";
+import {setErrorAC, setStatusAC} from "../../app/app-reducer";
 
 export type ActionType = ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof removeTodolistAC>
@@ -20,4 +21,6 @@ export type ActionType = ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof removeTaskAC>
     | ReturnType<typeof updateTaskAC>
     | ReturnType<typeof addTaskAC>
-    | ReturnType<typeof setTasksAC>;
+    | ReturnType<typeof setTasksAC>
+    | ReturnType<typeof setErrorAC>
+    | ReturnType<typeof setStatusAC>;

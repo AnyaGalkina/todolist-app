@@ -3,6 +3,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI} from "../api/todol
 import {Dispatch} from "redux";
 import {ActionType} from "./types/types";
 import {AppRootState} from "./store";
+import {setErrorAC, setStatusAC} from "../app/app-reducer";
 
 export type TasksType = {
     [key: string]: Array<TaskType>
@@ -123,23 +124,37 @@ export const setTasksAC = (todolistId: string, tasks: Array<TaskType>) =>
 
 //Thunks
 export const getTasksThunk = (todolistId: string) => (dispatch: Dispatch) => {
+    dispatch(setStatusAC("loading"))
     todolistsAPI.getTasks(todolistId)
         .then((res) => {
             dispatch(setTasksAC(todolistId, res.data.items))
+            dispatch(setStatusAC("succeeded"))
         })
 }
 
-export const removeTaskThunk = (todolistId: string, taskId: string)=> (dispatch: Dispatch) => {
+export const removeTaskThunk = (todolistId: string, taskId: string)=> (dispatch: Dispatch<ReturnType<typeof removeTaskAC | typeof setStatusAC>>) => {
+    // dispatch(setStatusAC("loading"))
     todolistsAPI.deleteTask({todolistId, taskId})
         .then((res) => {
             dispatch(removeTaskAC(todolistId, taskId))
         })
 }
 
-export const addTaskThunk = (payload: { todolistId: string, title: string }) => (dispatch: Dispatch<ReturnType<typeof addTaskAC>>) => {
+export const addTaskThunk = (payload: { todolistId: string, title: string }) => (dispatch: Dispatch<ActionType>) => {
+    dispatch(setStatusAC("loading"))
     todolistsAPI.createTask(payload)
         .then((res) => {
-            dispatch(addTaskAC(payload.todolistId, res.data.data.item))
+            if(res.data.resultCode === 0) {
+                dispatch(addTaskAC(payload.todolistId, res.data.data.item))
+                dispatch(setStatusAC("succeeded"))
+            } else {
+                if(res.data.messages.length) {
+                    dispatch(setErrorAC(res.data.messages[0]))
+                }else{
+                    dispatch(setErrorAC("Some error occurred"))
+                }
+                dispatch(setStatusAC("failed"))
+            }
         })
 }
 
