@@ -7,8 +7,8 @@ import {
 let state: Array<TodolistDomainType>
 beforeEach(() => {
     state = [
-        {id: "1", title: "Learn in Front End", filter: ALL, addedDate: "", order: 0},
-        {id: "2", title: "New skills", filter: ALL, addedDate: "", order: 0}
+        {id: "1", title: "Learn in Front End", filter: ALL, addedDate: "", order: 0, entityStatus: "idle"},
+        {id: "2", title: "New skills", filter: ALL, addedDate: "", order: 0, entityStatus: "idle"}
     ]
 });
 

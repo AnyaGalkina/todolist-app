@@ -2,10 +2,12 @@ import {v1} from "uuid";
 import {todolistsAPI, TodolistType} from "../api/todolistsAPI";
 import {Dispatch} from "redux";
 import {ActionType} from "./types/types";
+import {RequestStatusType, setStatusAC} from "../app/app-reducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
+    entityStatus: RequestStatusType
 }
 
 export const CHANGE_TODOLIST_TITLE = "app/todolists-reducers/CHANGE_TODOLIST_TITLE"
@@ -35,9 +37,9 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
         case REMOVE_TODOLISTID:
             return state.filter(t => t.id !== action.payload.todolistId);
         case ADD_TODOLIST:
-            return [{...action.payload.todolist, filter: ALL}, ...state];
+            return [{...action.payload.todolist, filter: ALL, entityStatus: "idle"}, ...state];
         case SET_TODOLISTS:
-            return action.payload.todolists.map(t => ({...t, filter: ALL}))
+            return action.payload.todolists.map(t => ({...t, filter: ALL, entityStatus: "idle"}))
         default:
             return state;
     }
@@ -57,9 +59,11 @@ export const setTodolists = (todolists: TodolistType[]) =>
 
 //Thunks
 export const getTodolistsThunk = () => (dispatch: Dispatch<ActionType>) => {
+    dispatch(setStatusAC("loading"))
     todolistsAPI.getTodolist()
         .then((res) => {
             dispatch(setTodolists(res.data))
+            dispatch(setStatusAC("succeeded"))
         })
 }
 
