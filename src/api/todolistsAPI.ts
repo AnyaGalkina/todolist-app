@@ -6,7 +6,6 @@ const instance = axios.create({
     headers: {"api-key": "8cb31c3e-5e62-4d4f-945f-025b0014bebf"}
 });
 
-// applyMiddleware(thunk)
 
 export const todolistsAPI = {
     getTodolist() {
@@ -29,7 +28,6 @@ export const todolistsAPI = {
     },
     updateTask(payload: { todolistId: string, taskId: string, model: UpdateModel }
     ) {
-        debugger
         return instance.put<CommonResType<DataType<TaskType>>>(`/todo-lists/${payload.todolistId}/tasks/${payload.taskId}`, {...payload.model});
     },
     deleteTask(payload: { todolistId: string, taskId: string }) {
@@ -47,7 +45,7 @@ export type TodolistType = {
 type DataType<D> = {
     item: D
 }
-type CommonResType<T = {}> = {
+export type CommonResType<T = {}> = {
     resultCode: number;
     messages: string[];
     fieldsErrors: string[];

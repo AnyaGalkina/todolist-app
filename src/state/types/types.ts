@@ -7,7 +7,7 @@ import {
 } from "../todolists-reducer";
 import {
     addTaskAC,
-    removeTaskAC,
+    removeTaskAC, setTaskEntityStatusAC,
     setTasksAC,
     updateTaskAC
 } from "../tasks-reducer";
@@ -23,6 +23,7 @@ export type ActionType = ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof addTaskAC>
     | ReturnType<typeof setTasksAC>
     | ReturnType<typeof setEntityStatusAC>
+    | ReturnType<typeof setTaskEntityStatusAC>
     | AppActionsType;
 
 

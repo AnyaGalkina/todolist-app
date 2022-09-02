@@ -43,7 +43,10 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
         case SET_TODOLISTS:
             return action.payload.todolists.map((t: TodolistType) => ({...t, filter: ALL, entityStatus: "idle"}))
         case SET_ENTITY_STATUS:
-            return state.map(t => t.id === action.payload.todolistId ? {...t, entityStatus: action.payload.entityStatus} : t )
+            return state.map(t => t.id === action.payload.todolistId ? {
+                ...t,
+                entityStatus: action.payload.entityStatus
+            } : t)
         default:
             return state;
     }
@@ -61,7 +64,7 @@ export const changeFilterAC = (todolistId: string, filter: FilterValuesType) =>
 export const setTodolists = (todolists: TodolistType[]) =>
     ({type: SET_TODOLISTS, payload: {todolists}} as const);
 export const setEntityStatusAC = (todolistId: string, entityStatus: RequestStatusType) =>
-    ({type: SET_ENTITY_STATUS , payload: {todolistId, entityStatus}} as const);
+    ({type: SET_ENTITY_STATUS, payload: {todolistId, entityStatus}} as const);
 
 //Thunks
 export const getTodolistsThunk = () => (dispatch: Dispatch<ActionType>) => {
@@ -72,8 +75,8 @@ export const getTodolistsThunk = () => (dispatch: Dispatch<ActionType>) => {
             // dispatch(setAppStatusAC("succeeded"))
         })
         .catch((error) => {
-        handleServerNetworkError(error, dispatch)
-    })
+            handleServerNetworkError(error, dispatch)
+        })
 }
 
 export const removeTodolistsThunk = (todolistId: string) => (dispatch: Dispatch<ActionType>) => {
