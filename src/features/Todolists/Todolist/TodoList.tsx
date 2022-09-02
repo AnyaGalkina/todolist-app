@@ -3,7 +3,7 @@ import AddItemForm from "../../../components/AddItemForm/AddItemForm";
 import EditableSpanTitle from "../../../components/EditableSpan/EditableSpanTitle";
 import {Button, IconButton} from "@mui/material";
 import {DeleteOutlined} from "@mui/icons-material";
-import {addTaskThunk, getTasksThunk} from "../../../state/tasks-reducer";
+import {addTaskThunk, getTasksThunk, TaskDomainType} from "../../../state/tasks-reducer";
 import {
     ACTIVE,
     ALL,
@@ -28,7 +28,7 @@ type PropsType = {
 const TodoList = React.memo(({todolist}: PropsType) => {
     const {title, id: todolistId, filter, entityStatus} = todolist;
     // const dispatch = useDispatch();
-    let tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[todolistId]);
+    let tasks = useSelector<AppRootState, Array<TaskDomainType>>(state => state.tasks[todolistId]);
     const dispatch = useAppDispatch();
 
 
@@ -71,7 +71,6 @@ const TodoList = React.memo(({todolist}: PropsType) => {
 
 
     useEffect(() => {
-        debugger
         dispatch(getTasksThunk(todolistId));
     }, []);
 
@@ -79,7 +78,7 @@ const TodoList = React.memo(({todolist}: PropsType) => {
     return (
         <div>
             <h3 className={styles.todolistTitle}>
-                <EditableSpanTitle title={title} onChangeTitle={onChangeTodolistTitleHandler}/>
+                <EditableSpanTitle title={title} onChangeTitle={onChangeTodolistTitleHandler} disabled={isDisabled}/>
                 <IconButton aria-label="delete" onClick={removeTodolistHandler} disabled={isDisabled}>
                     <DeleteOutlined style={{color: "#6b7d84"}}/>
                 </IconButton>

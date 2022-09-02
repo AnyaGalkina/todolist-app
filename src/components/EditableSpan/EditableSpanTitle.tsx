@@ -4,6 +4,7 @@ import {TextField} from "@mui/material";
 type PropsType = {
     title: string;
     onChangeTitle: (title: string) => void;
+    disabled: boolean
 }
 
 function TextArea(props: { onBlur: () => void, onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void,
@@ -43,6 +44,7 @@ const EditableSpanTitle: React.FC<PropsType> = React.memo((props) => {
                 onBlur={activateViewMode}
                 onKeyDown={onKeyDownHandler}
                 autoFocus
+                disabled={props.disabled}
             />
             : <span onDoubleClick ={activateEditMode}>{props.title}</span>
     );
