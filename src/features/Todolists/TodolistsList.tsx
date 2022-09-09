@@ -1,29 +1,36 @@
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootState, AppDispatch} from "../../state/store";
+import {useSelector} from "react-redux";
+import {AppRootState, useAppSelector} from "../../state/store";
 import {addTodolistThunk, getTodolistsThunk, TodolistDomainType} from "../../state/todolists-reducer";
-import {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {Grid, Paper} from "@mui/material";
 import AddItemForm from "../../components/AddItemForm/AddItemForm";
 import TodoList from "./Todolist/TodoList";
 import {useAppDispatch} from "../../state/hooks";
+import {Navigate} from "react-router-dom";
 
 
 export const TodolistList = () => {
     const todolists = useSelector<AppRootState, Array<TodolistDomainType>>(state => state.todolists);
-    const dispatch = useAppDispatch();
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
 
-    const setPrevState = () => {
-        // setTasks(previousState);
-    }
+    const dispatch = useAppDispatch();
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistThunk(title))
-        // dispatch(addTodolistAC(title))
     }, [dispatch]);
 
     useEffect(() => {
+        if(!isLoggedIn) {
+            return
+        }
+
         dispatch(getTodolistsThunk());
     }, [])
+
+
+    if(!isLoggedIn) {
+        return <Navigate to={"/todolist-app/login"}/>
+    }
 
     return <>
         <Grid container style={{padding: "20px"}}>
