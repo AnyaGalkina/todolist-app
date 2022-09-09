@@ -22,7 +22,8 @@ beforeEach(() => {
                 deadline: "",
                 description: "",
                 order: 0,
-                todoListId: "1"
+                todoListId: "1",
+                entityStatus: "idle"
             },
             {
                 id: "4", title: "JS",
@@ -33,7 +34,8 @@ beforeEach(() => {
                 deadline: "",
                 description: "",
                 order: 0,
-                todoListId: "1"
+                todoListId: "1",
+                entityStatus: "idle"
             },
             {
                 id: "5", title: "React",
@@ -44,7 +46,8 @@ beforeEach(() => {
                 deadline: "",
                 description: "",
                 order: 0,
-                todoListId: "1"
+                todoListId: "1",
+                entityStatus: "idle"
             },
         ],
         ["2"]: [
@@ -57,7 +60,8 @@ beforeEach(() => {
                 deadline: "",
                 description: "",
                 order: 0,
-                todoListId: "2"
+                todoListId: "2",
+                entityStatus: "idle"
             },
             {
                 id: "4", title: "Ride a motorbike",
@@ -68,7 +72,8 @@ beforeEach(() => {
                 deadline: "",
                 description: "",
                 order: 0,
-                todoListId: "2"
+                todoListId: "2",
+                entityStatus: "idle"
             },
             {
                 id: "5", title: "Ride a car",
@@ -79,7 +84,8 @@ beforeEach(() => {
                 deadline: "",
                 description: "",
                 order: 0,
-                todoListId: "2"
+                todoListId: "2",
+                entityStatus: "idle"
             },
         ]
     }
