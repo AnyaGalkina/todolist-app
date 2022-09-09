@@ -6,20 +6,20 @@ import * as serviceWorker from "./serviceWorker";
 import { CssBaseline, ThemeProvider} from "@mui/material";
 import {Provider} from "react-redux";
 import {store} from "./state/store";
-import {HashRouter} from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 import {theme} from "./app/theme";
 
 
 
 ReactDOM.render(
-    <HashRouter>
+    <BrowserRouter>
         <Provider store={store}>
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
                 <App/>
             </ThemeProvider>
         </Provider>
-    </HashRouter>
+    </BrowserRouter>
     ,
     document.getElementById("root"));
 
