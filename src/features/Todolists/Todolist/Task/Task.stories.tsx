@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {AppRootState} from "../../../../state/store";
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import React from "react";
-import {ReduxStoreProviderDecorator} from "../../../../state/ReduxStoreProviderDecorator";
+// import {ReduxStoreProviderDecorator} from "../../../../state/ReduxStoreProviderDecorator";
 import {TaskType} from "../../../../api/todolistsAPI";
 import {TaskDomainType} from "../../../../state/tasks-reducer";
 
@@ -11,7 +11,7 @@ export default {
     title: "TODOLIST/Task component",
     component: Task,
 
-    decorators: [ReduxStoreProviderDecorator]
+    // decorators: [ReduxStoreProviderDecorator]
 } as ComponentMeta<typeof TaskWithRedux>;
 
 // const activeTask: TaskType = {id: "1", taskTitle: "Ride a motorbike", isDone: false};

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {todolistsAPI} from "../api/todolistsAPI";
+import {TaskPriorities, TaskStatuses, todolistsAPI} from "../api/todolistsAPI";
+import {UpdateModel} from "../api/todolistsAPI";
 
 export default {
     title: "API/Tasks"
@@ -7,15 +8,17 @@ export default {
 
 let todolistId = "67328f87-da7a-4a07-be43-a9a9a7c5c6b7";
 const taskId = "430b8cd4-775f-46cd-994a-e7c37867a974";
-let task = {
+let model: UpdateModel = {
     title: "Myau myau",
     description: "Bark bark",
-    completed: true,
+    // completed: true,
     status: 0,
     priority: 2,
     startDate: "",
     deadline: "",
 }
+
+
 
 
 export const GetTasks = () => {
@@ -54,7 +57,7 @@ export const DeleteTask = () => {
 export const UpdateTask = () => {
     const [state, setState] = useState<any>(null);
     useEffect(() => {
-        todolistsAPI.updateTask({todolistId, taskId, task})
+        todolistsAPI.updateTask({todolistId, taskId, model})
             .then((res) => {
                 setState(res.data);
             })

@@ -190,7 +190,7 @@ export const addTaskThunk = (payload: { todolistId: string, title: string }) => 
         })
 }
 
-type UpdateModuleType = {
+export type UpdateModuleType = {
     title?: string;
     description?: string;
     completed?: boolean;

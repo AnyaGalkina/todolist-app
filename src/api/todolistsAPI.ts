@@ -81,7 +81,7 @@ export type TaskType = {
     deadline: string;
     addedDate: string;
 }
-type UpdateModel = {
+export type UpdateModel = {
     title: string;
     description: string;
     // completed: boolean;

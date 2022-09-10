@@ -77,13 +77,25 @@ const initialGlobalState = {
     }
 }
 
-export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootState, applyMiddleware(thunk))
+// export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootState, applyMiddleware(thunk))
+//
+// export const ReduxStoreProviderDecorator = (storyFn: any) => (
+//     <Provider
+//         store={storyBookStore}>{storyFn()}
+//     </Provider>
+// )
 
-export const ReduxStoreProviderDecorator = (storyFn: any) => (
-    <Provider
-        store={storyBookStore}>{storyFn()}
-    </Provider>
-)
+
+
+
+
+
+
+
+
+
+
+
 
 
 // export const ReduxSAtoreProviderDecorator = (storyFn: React.ReactNode) => {
