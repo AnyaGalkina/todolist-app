@@ -1,8 +1,14 @@
 import {
     ACTIVE,
-    addTodolistAC, ALL, changeFilterAC, changeTodolistTitleAC,
-    removeTodolistAC, todolistsReducer, TodolistDomainType, setTodolists
-} from "../todolists-reducer";
+    addTodolist,
+    ALL,
+    changeFilter,
+    changeTodolistTitle,
+    removeTodolist,
+    todolistsReducer,
+    TodolistDomainType,
+    setTodolists
+} from "../../features/Todolists/todolists-reducer";
 
 let state: Array<TodolistDomainType>
 beforeEach(() => {
@@ -16,7 +22,7 @@ test("todolist array should be set to state", () => {
     let newTodoArr = [
         {id: "3", title: "New Todolist", addedDate: "12.12.22", order: 1}
     ]
-    let newState = todolistsReducer(state, setTodolists(newTodoArr));
+    let newState = todolistsReducer(state, setTodolists({todolists: newTodoArr}));
 
     expect(newState.length).toBe(1);
     expect(newState[0].id).toBe("3");
@@ -27,7 +33,7 @@ test("todolist array should be set to state", () => {
 })
 
 test("filter should be changed to 'active'", () => {
-    let newState = todolistsReducer(state, changeFilterAC("1", ACTIVE))
+    let newState = todolistsReducer(state, changeFilter({todolistId: "1", filter: ACTIVE}))
 
     expect(newState[0].filter).toBe(ACTIVE);
     expect(newState.length).toBe(2);
@@ -35,7 +41,7 @@ test("filter should be changed to 'active'", () => {
 })
 
 test("title should be changed", () => {
-    let newState = todolistsReducer(state, changeTodolistTitleAC("2", "What to buy"))
+    let newState = todolistsReducer(state, changeTodolistTitle({todolistId: "2", title: "What to buy"}))
 
     expect(newState[1].title).toBe("What to buy");
     expect(newState.length).toBe(2);
@@ -48,7 +54,7 @@ test("new todolist should be added", () => {
     let newTodolist = {
         id: "3", title: "Movies to watch", addedDate: "", order: 0
     }
-    let newState = todolistsReducer(state, addTodolistAC(newTodolist))
+    let newState = todolistsReducer(state, addTodolist({todolist: newTodolist}))
 
     expect(newState.length).toBe(3);
     expect(newState[0].title).toBe("Movies to watch");
@@ -60,7 +66,7 @@ test("new todolist should be added", () => {
 })
 
 test("todolist should be removed", () => {
-    let newState = todolistsReducer(state, removeTodolistAC("2"))
+    let newState = todolistsReducer(state, removeTodolist({todolistId: "2"}))
 
     expect(newState.length).toBe(1);
     expect(newState[0].id).toBe("1");

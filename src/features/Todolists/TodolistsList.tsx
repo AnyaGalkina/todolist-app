@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
 import {AppRootState, useAppSelector} from "../../state/store";
-import {addTodolistThunk, getTodolistsThunk, TodolistDomainType} from "../../state/todolists-reducer";
+import {addTodolistThunk, getTodolistsThunk, TodolistDomainType} from "./todolists-reducer";
 import React, {useCallback, useEffect} from "react";
 import {Grid, Paper} from "@mui/material";
 import AddItemForm from "../../components/AddItemForm/AddItemForm";

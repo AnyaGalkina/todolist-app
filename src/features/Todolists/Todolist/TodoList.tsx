@@ -3,16 +3,16 @@ import AddItemForm from "../../../components/AddItemForm/AddItemForm";
 import EditableSpanTitle from "../../../components/EditableSpan/EditableSpanTitle";
 import {Button, IconButton} from "@mui/material";
 import {DeleteOutlined} from "@mui/icons-material";
-import {addTaskThunk, getTasksThunk, TaskDomainType} from "../../../state/tasks-reducer";
+import {addTaskThunk, getTasksThunk, TaskDomainType} from "./Task/tasks-reducer";
 import {
     ACTIVE,
     ALL,
-    changeFilterAC,
+    changeFilter,
     COMPLETED,
     FilterValuesType, removeTodolistsThunk,
     TodolistDomainType,
     updateTodolistTitleThunk,
-} from "../../../state/todolists-reducer";
+} from "../todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../../../state/store";
 import {Task} from "./Task/Task";
@@ -33,7 +33,7 @@ const TodoList = React.memo(({todolist}: PropsType) => {
 
 
     const onFilterClickHandler = useCallback((filter: FilterValuesType) => {
-        return () => dispatch(changeFilterAC(todolistId, filter));
+        return () => dispatch(changeFilter({todolistId, filter}));
     }, [dispatch, filter])
 
     const removeTodolistHandler = () => {

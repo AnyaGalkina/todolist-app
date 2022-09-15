@@ -1,4 +1,4 @@
-import {removeTaskThunk, TaskDomainType, updateTaskThunk} from "../../../../state/tasks-reducer";
+import {removeTaskThunk, TaskDomainType, updateTaskThunk} from "./tasks-reducer";
 import React, {ChangeEvent, useCallback} from "react";
 import {Checkbox, IconButton} from "@mui/material";
 import EditableSpanTitle from "../../../../components/EditableSpan/EditableSpanTitle";

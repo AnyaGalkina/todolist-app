@@ -5,7 +5,7 @@ import {ComponentMeta, ComponentStory} from "@storybook/react";
 import React from "react";
 // import {ReduxStoreProviderDecorator} from "../../../../state/ReduxStoreProviderDecorator";
 import {TaskType} from "../../../../api/todolistsAPI";
-import {TaskDomainType} from "../../../../state/tasks-reducer";
+import {TaskDomainType} from "./tasks-reducer";
 
 export default {
     title: "TODOLIST/Task component",

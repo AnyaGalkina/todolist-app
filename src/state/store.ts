@@ -1,11 +1,12 @@
 import {applyMiddleware, combineReducers, compose, legacy_createStore} from "redux";
-import {todolistsReducer} from "./todolists-reducer";
-import {tasksReducer} from "./tasks-reducer";
+import {todolistsReducer} from "../features/Todolists/todolists-reducer";
+import {tasksReducer} from "../features/Todolists/Todolist/Task/tasks-reducer";
 import thunk, {ThunkDispatch} from "redux-thunk";
 import {ActionType} from "./types/types";
 import {appReducer} from "../app/app-reducer";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
 import {authReducer} from "../features/Login/auth-reducer";
+import {configureStore} from "@reduxjs/toolkit";
 
 export type AppRootState = ReturnType<typeof rootReducer>;
 export type RootState = ReturnType<typeof store.getState>
@@ -20,9 +21,17 @@ const rootReducer = combineReducers({
     auth: authReducer,
 });
 
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk),
+    devTools: true
+    }
+)
 
-export const store = legacy_createStore(rootReducer, applyMiddleware(thunk));
-// export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootState, unknown, ActionType>;
+
+
+// export type AppThunkType<ReturnType = void> =
+// ThunkAction<ReturnType, AppRootState, unknown, ActionType>;
 
 //@ts-ignore
 window.store = store;

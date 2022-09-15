@@ -1,5 +1,10 @@
-import {addTodolistAC, setTodolists, TodolistDomainType, todolistsReducer} from "../todolists-reducer";
-import {TasksType, tasksReducer} from "../tasks-reducer";
+import {
+    addTodolist,
+    setTodolists,
+    TodolistDomainType,
+    todolistsReducer
+} from "../../features/Todolists/todolists-reducer";
+import {TasksType, tasksReducer} from "../../features/Todolists/Todolist/Task/tasks-reducer";
 
 
 test("todolists ids should be added", () => {
@@ -8,20 +13,22 @@ test("todolists ids should be added", () => {
         {id: "4", title: "New Todolist", addedDate: "12.12.22", order: 1}
     ];
 
-    const newState = tasksReducer({}, setTodolists(newTodoArr));
+    const newState = tasksReducer({}, setTodolists({todolists: newTodoArr}));
     const keys = Object.keys(newState)
 
     expect(keys.length).toBe(2);
     expect(keys[0]).toBe("3");
-    expect(newState['4']).toStrictEqual([]);
-    expect(newState['3']).toStrictEqual([]);
+    expect(newState["4"]).toStrictEqual([]);
+    expect(newState["3"]).toStrictEqual([]);
 })
 
 test("ids should be equals", () => {
     const startTasksState: TasksType = {}
     const startTodolistsState: Array<TodolistDomainType> = []
 
-    const action = addTodolistAC({id: "5", title:  "new todolist", addedDate: "12.12.22", order: 1})
+    const action = addTodolist({
+        todolist: {id: "5", title: "new todolist", addedDate: "12.12.22", order: 1}
+    })
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)
