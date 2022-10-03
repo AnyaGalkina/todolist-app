@@ -5,7 +5,7 @@ import {RESULT_CODES} from "../../../../state/types/types";
 import {AppRootState} from "../../../../state/store";
 import {RequestStatusType, setAppStatus} from "../../../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../../../utils/error-utils";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type TaskDomainType = TaskType & {
     entityStatus: RequestStatusType
@@ -75,6 +75,21 @@ export const getTasksThunk = (todolistId: string) => (dispatch: Dispatch) => {
             handleServerNetworkError(error, dispatch)
         })
 }
+
+
+
+// export const getTasks = createAsyncThunk("tasks/getTasks", (todolistId: string, thunkAPI) =>
+// // const getTasksThunk = (todolistId: string) => (dispatch: Dispatch) => {
+//     thunkAPI.dispatch(setAppStatus({status: "loading"}))
+//     todolistsAPI.getTasks(todolistId)
+//         .then((res) => {
+//             thunkAPI.dispatch(setTasks({todolistId, tasks: res.data.items}))
+//             thunkAPI.dispatch(setAppStatus({status: "succeeded"}))
+//         })
+//         .catch((error) => {
+//             handleServerNetworkError(error, dispatch)
+//         })
+// })
 
 export const removeTaskThunk = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatus({status: "loading"}));

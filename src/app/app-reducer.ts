@@ -5,6 +5,7 @@ import {setIsLoggedIn} from "../features/Login/auth-reducer";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
+export type InitialStateType = typeof initialState;
 
 const initialState = {
     //do we have interaction with server
@@ -33,41 +34,6 @@ const slice = createSlice({
 
 export const appReducer = slice.reducer;
 export const {setAppStatus, setAppError, setIsInitialized} = slice.actions;
-
-//
-// export type InitialStateType = {
-//     status: RequestStatusType;
-//     error: string | null;
-//     isInitialized: boolean
-// }
-// export type AppActionsType =
-//     ReturnType<typeof setAppErrorAC>
-//     | ReturnType<typeof setAppStatusAC>
-//     | ReturnType<typeof setIsInitializedAC>;
-// ;
-//
-// const SET_STATUS = "APP/SET_STATUS";
-// const SET_ERROR = "APP/SET_ERROR";
-// const SET_INITIALIZED = "APP/SET_INITIALIZED";
-
-// export const appReducer = (state: InitialStateType = initialState, action: AppActionsType): InitialStateType => {
-//     switch (action.type) {
-//         case SET_STATUS:
-//         case SET_INITIALIZED:
-//         case SET_ERROR:
-//             return {...state, ...action.payload};
-//         default:
-//             return state;
-//     }
-// }
-
-// export const setAppStatusAC = (status: RequestStatusType) =>
-//     ({type: SET_STATUS, payload: {status}} as const);
-// export const setAppErrorAC = (error: string | null) =>
-//     ({type: SET_ERROR, payload: {error}} as const);
-// export const setIsInitializedAC = (isInitialized: boolean) =>
-//     ({type: SET_INITIALIZED, payload: {isInitialized}} as const);
-//
 
 export const setInitializedTC = () => (dispatch: Dispatch) => {
     authAPI.me()

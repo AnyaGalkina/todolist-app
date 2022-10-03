@@ -1,7 +1,7 @@
-import {appReducer, setAppError, setAppStatus, setIsInitialized} from "../../app/app-reducer";
+import {appReducer, setAppError, setAppStatus, setIsInitialized, InitialStateType} from "../../app/app-reducer";
 
 
-let state;
+let state: InitialStateType;
 
 beforeEach(() => {
     state = {

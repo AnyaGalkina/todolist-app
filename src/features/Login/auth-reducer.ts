@@ -6,6 +6,7 @@ import {handleServerAppError, handleServerNetworkError} from "../../utils/error-
 import axios from "axios";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
+export type InitialStateType = typeof initialState;
 
 const initialState = {
     isLoggedIn: false

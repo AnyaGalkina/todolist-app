@@ -1,4 +1,4 @@
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootState, useAppSelector} from "../../state/store";
 import {addTodolistThunk, getTodolistsThunk, TodolistDomainType} from "./todolists-reducer";
 import React, {useCallback, useEffect} from "react";
@@ -7,6 +7,8 @@ import AddItemForm from "../../components/AddItemForm/AddItemForm";
 import TodoList from "./Todolist/TodoList";
 import {useAppDispatch} from "../../state/hooks";
 import {Navigate} from "react-router-dom";
+import {ThunkDispatch} from "redux-thunk";
+import {ActionType} from "../../state/types/types";
 
 
 export const TodolistList = () => {
