@@ -28,3 +28,4 @@ type MeGetType = {
     login: string
     email: string
 }
+

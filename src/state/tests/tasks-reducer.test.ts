@@ -1,10 +1,5 @@
-import {
-    addTask,
-    removeTask, setTasks,
-    tasksReducer, TasksType, updateTask
-} from "../../features/Todolists/Todolist/Task/tasks-reducer";
-
-import {addTodolist, ALL, removeTodolist} from "../../features/Todolists/todolists-reducer";
+import {addTask, getTasks, removeTask, tasksReducer, TasksType, updateTask} from "../../features/Todolists/Todolist/Task/tasks-reducer";
+import {addTodolist, removeTodolist} from "../../features/Todolists/todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolistsAPI";
 
 let state: TasksType;
@@ -104,7 +99,7 @@ test("tasks should be updated for exact todolist id", () => {
         todoListId: "2"
     }]
 
-    let newState = tasksReducer(state, setTasks({todolistId: "2", tasks: newTasksArr}))
+    let newState = tasksReducer(state, getTasks.fulfilled({todolistId: "2", tasks: newTasksArr}, "requestId", "2"))
 
     expect(newState["2"].length).toBe(1);
     expect(newState["2"][0].id).toBe("6");
@@ -112,7 +107,8 @@ test("tasks should be updated for exact todolist id", () => {
 })
 
 test("task should be removed from correct array", () => {
-    let newState = tasksReducer(state, removeTask({todolistId: "1", taskId: "4"}))
+    let param = {todolistId: "1", taskId: "4"};
+    let newState = tasksReducer(state, removeTask.fulfilled(param, "requestId", param))
 
     expect(newState["1"].length).toBe(2);
     expect(newState["2"].length).toBe(3);
@@ -134,7 +130,11 @@ test("task status should be changed to Completed", () => {
         order: 0,
         todoListId: "2"
     }
-    let newState = tasksReducer(state, updateTask({todolistId: "2", taskId: "4", task: newTask}))
+    let newState = tasksReducer(state, updateTask.fulfilled({
+        todolistId: "2",
+        taskId: "4",
+        task: newTask
+    }, "requestId", {todolistId: "2", taskId: "4", model: newTask}))
 
     expect(newState["2"][1].status).toBe(TaskStatuses.Completed);
     expect(newState["1"][1].status).toBe(TaskStatuses.New);
@@ -155,7 +155,11 @@ test("task title should be changed", () => {
         todoListId: "2"
     };
 
-    let newState = tasksReducer(state, updateTask({todolistId: "1", taskId: "5", task: newTask}))
+    let newState = tasksReducer(state, updateTask.fulfilled({
+        todolistId: "1",
+        taskId: "5",
+        task: newTask
+    }, "requestId", {todolistId: "1", taskId: "5", model: newTask}))
 
     expect(newState["1"][2].title).toBe("NodeJS");
     expect(newState["2"][2].title).toBe("Ride a car");
@@ -175,7 +179,10 @@ test("task should be added", () => {
         todoListId: "2"
     }
 
-    let newState = tasksReducer(state, addTask({todolistId: "2", task: newTask}))
+    let newState = tasksReducer(state, addTask.fulfilled({
+        todolistId: "2",
+        task: newTask
+    }, "requestId", {todolistId: "2", title: "New Task"}))
 
     expect(newState["2"].length).toBe(4);
     expect(newState["2"][3].id).toBeDefined();
@@ -188,9 +195,9 @@ test("task should be added", () => {
 })
 
 test("todolist should be added", () => {
-    let newState = tasksReducer(state, addTodolist({
-            todolist: {id: "10", title: "Some new TodoList", addedDate: "", order: 0}
-        },))
+    let newState = tasksReducer(state, addTodolist.fulfilled({
+        todolist: {id: "10", title: "Some new TodoList", addedDate: "", order: 0}
+    }, " ", {title: "Some new TodoList"}))
 
     const keys = Object.keys(newState);
     const newKey = keys.find(k => k !== "1" && k !== "2");
@@ -210,7 +217,7 @@ test("todolist should be added", () => {
 
 
 test("todolist should be removed", () => {
-    let newState = tasksReducer(state, removeTodolist({todolistId: "1"}))
+    let newState = tasksReducer(state, removeTodolist.fulfilled({todolistId: "1"}, "", {todolistId: "1"}))
 
     const keys = Object.keys(newState);
 

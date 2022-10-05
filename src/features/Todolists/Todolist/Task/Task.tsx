@@ -1,4 +1,4 @@
-import {removeTaskThunk, TaskDomainType, updateTaskThunk} from "./tasks-reducer";
+import {removeTask, TaskDomainType, updateTask} from "./tasks-reducer";
 import React, {ChangeEvent, useCallback} from "react";
 import {Checkbox, IconButton} from "@mui/material";
 import EditableSpanTitle from "../../../../components/EditableSpan/EditableSpanTitle";
@@ -16,15 +16,15 @@ export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
     const dispatch = useAppDispatch();
 
     const onRemoveHandler = () => {
-        dispatch(removeTaskThunk(todolistId, task.id));
+        dispatch(removeTask({todolistId, taskId: task.id}));
     };
 
     const onStatusChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let status = task.status === TaskStatuses.Completed ? TaskStatuses.New : TaskStatuses.Completed
-        dispatch(updateTaskThunk(todolistId, task.id, {status}))
+        dispatch(updateTask({todolistId, taskId: task.id, model: {status}}))
     }
     const onChangeTitleHandler = useCallback((newTitle: string) => {
-        dispatch(updateTaskThunk(todolistId, task.id, {title: newTitle}))
+        dispatch(updateTask({todolistId, taskId: task.id, model: {title: newTitle}}))
     }, [todolistId, task.id, dispatch]);
 
     let isDisabled = task.entityStatus === "loading";

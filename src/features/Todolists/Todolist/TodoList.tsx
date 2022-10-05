@@ -3,21 +3,22 @@ import AddItemForm from "../../../components/AddItemForm/AddItemForm";
 import EditableSpanTitle from "../../../components/EditableSpan/EditableSpanTitle";
 import {Button, IconButton} from "@mui/material";
 import {DeleteOutlined} from "@mui/icons-material";
-import {addTaskThunk, getTasksThunk, TaskDomainType} from "./Task/tasks-reducer";
+import {addTask, getTasks, TaskDomainType} from "./Task/tasks-reducer";
 import {
     ACTIVE,
     ALL,
     changeFilter,
     COMPLETED,
-    FilterValuesType, removeTodolistsThunk,
+    FilterValuesType,
+    removeTodolist,
     TodolistDomainType,
-    updateTodolistTitleThunk,
+    updateTodolistTitle,
 } from "../todolists-reducer";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {AppRootState} from "../../../state/store";
 import {Task} from "./Task/Task";
 import styles from "./TodoList.module.css";
-import {TaskStatuses, TaskType} from "../../../api/todolistsAPI";
+import {TaskStatuses} from "../../../api/todolistsAPI";
 import {useAppDispatch} from "../../../state/hooks";
 
 
@@ -37,15 +38,14 @@ const TodoList = React.memo(({todolist}: PropsType) => {
     }, [dispatch, filter])
 
     const removeTodolistHandler = () => {
-        dispatch(removeTodolistsThunk(todolistId))
+        dispatch(removeTodolist({todolistId}))
     }
-
-    const addTask = useCallback((title: string) => {
-        dispatch(addTaskThunk({todolistId, title}));
+    const addTaskHandler = useCallback((title: string) => {
+        dispatch(addTask({todolistId, title}));
     }, [dispatch]);
 
     const onChangeTodolistTitleHandler = useCallback((title: string) => {
-        dispatch(updateTodolistTitleThunk(todolistId, title))
+        dispatch(updateTodolistTitle({todolistId, title}))
     }, [title, dispatch])
 
     const isDisabled = entityStatus === "loading";
@@ -71,7 +71,7 @@ const TodoList = React.memo(({todolist}: PropsType) => {
 
 
     useEffect(() => {
-        dispatch(getTasksThunk(todolistId));
+        dispatch(getTasks(todolistId));
     }, []);
 
 //JSX
@@ -84,7 +84,7 @@ const TodoList = React.memo(({todolist}: PropsType) => {
                 </IconButton>
             </h3>
             <div>
-                <AddItemForm addItem={addTask} disabled={isDisabled }/>
+                <AddItemForm addItem={addTaskHandler} disabled={isDisabled }/>
             </div>
             <div>
                 {tasksList}

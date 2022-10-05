@@ -1,6 +1,5 @@
 import {
-    addTodolist,
-    setTodolists,
+    addTodolist, getTodolists,
     TodolistDomainType,
     todolistsReducer
 } from "../../features/Todolists/todolists-reducer";
@@ -13,7 +12,7 @@ test("todolists ids should be added", () => {
         {id: "4", title: "New Todolist", addedDate: "12.12.22", order: 1}
     ];
 
-    const newState = tasksReducer({}, setTodolists({todolists: newTodoArr}));
+    const newState = tasksReducer({}, getTodolists.fulfilled({todolists: newTodoArr}, "requestId"));
     const keys = Object.keys(newState)
 
     expect(keys.length).toBe(2);
@@ -26,9 +25,9 @@ test("ids should be equals", () => {
     const startTasksState: TasksType = {}
     const startTodolistsState: Array<TodolistDomainType> = []
 
-    const action = addTodolist({
+    const action = addTodolist.fulfilled({
         todolist: {id: "5", title: "new todolist", addedDate: "12.12.22", order: 1}
-    })
+    }, "requestId", { title: "new todolist"})
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)

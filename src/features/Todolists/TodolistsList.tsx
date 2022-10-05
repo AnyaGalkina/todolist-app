@@ -1,14 +1,12 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {AppRootState, useAppSelector} from "../../state/store";
-import {addTodolistThunk, getTodolistsThunk, TodolistDomainType} from "./todolists-reducer";
+import {addTodolist, getTodolists, TodolistDomainType} from "./todolists-reducer";
 import React, {useCallback, useEffect} from "react";
 import {Grid, Paper} from "@mui/material";
 import AddItemForm from "../../components/AddItemForm/AddItemForm";
 import TodoList from "./Todolist/TodoList";
 import {useAppDispatch} from "../../state/hooks";
 import {Navigate} from "react-router-dom";
-import {ThunkDispatch} from "redux-thunk";
-import {ActionType} from "../../state/types/types";
 
 
 export const TodolistList = () => {
@@ -17,8 +15,8 @@ export const TodolistList = () => {
 
     const dispatch = useAppDispatch();
 
-    const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistThunk(title))
+    const addTodolistHandler = useCallback((title: string) => {
+        dispatch(addTodolist({title}))
     }, [dispatch]);
 
     useEffect(() => {
@@ -26,7 +24,7 @@ export const TodolistList = () => {
             return
         }
 
-        dispatch(getTodolistsThunk());
+        dispatch(getTodolists());
     }, [])
 
 
@@ -36,7 +34,7 @@ export const TodolistList = () => {
 
     return <>
         <Grid container style={{padding: "20px"}}>
-            <AddItemForm addItem={addTodolist} disabled={false}/>
+            <AddItemForm addItem={addTodolistHandler} disabled={false}/>
         </Grid>
         <Grid container spacing={3}>
             {todolists.map((tl: TodolistDomainType) => {

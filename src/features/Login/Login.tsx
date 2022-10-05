@@ -7,12 +7,18 @@ import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import {FormikErrors, useFormik} from "formik";
+import {FormikErrors, FormikHelpers, FormikValues, useFormik} from "formik";
 import style from "./Login.module.css";
 import {useAppSelector} from "../../state/store";
-import {loginTC} from "./auth-reducer";
+import {login} from "./auth-reducer";
 import {useAppDispatch} from "../../state/hooks";
 import {Navigate} from "react-router-dom";
+
+type FormikValuesType = {
+    email: string;
+    password: string;
+    rememberMe: boolean;
+}
 
 export const Login = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -28,21 +34,32 @@ export const Login = () => {
             const errors: FormikErrors<any> = {};
 
             if (!values.email) {
-                    errors.email = "Email is required"
+                errors.email = "Email is required"
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = "Invalid email address";
             }
             if (values.password.length < 2) {
-                errors.password = "Password should be minimum 2 symbols";            }
+                errors.password = "Password should be minimum 2 symbols";
+            }
             return errors
         },
-        onSubmit: values => {
-            dispatch(loginTC(values))
+        // onSubmit: (values) => {
+        //     dispatch(login(values));
+        //     formik.resetForm();
+        // },
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormikValuesType>) => {
+            const res = await dispatch(login(values));
+            if (login.rejected.match(res)) {
+                if (res.payload?.fieldsErrors?.length) {
+                    const error = res.payload.fieldsErrors[0];
+                    formikHelpers.setFieldError(error.field, error.error);
+                }
+            }
             formik.resetForm();
         },
     })
 
-    if(isLoggedIn) {
+    if (isLoggedIn) {
         return <Navigate to={"/todolist-app"}/>
     }
 

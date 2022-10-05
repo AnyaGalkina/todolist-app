@@ -45,10 +45,12 @@ export type TodolistType = {
 type DataType<D> = {
     item: D
 }
+export type FieldsErrorType = {field: string, error: string}
 export type CommonResType<T = {}> = {
     resultCode: number;
     messages: string[];
-    fieldsErrors: string[];
+    // fieldsErrors: string[];
+    fieldsErrors: FieldsErrorType;
     data: T;
 }
 export type TaskGetResType = {

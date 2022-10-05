@@ -1,4 +1,4 @@
-import {appReducer, setAppError, setAppStatus, setIsInitialized, InitialStateType} from "../../app/app-reducer";
+import {appReducer, setAppError, setAppStatus, InitialStateType, setInitialized} from "../../app/app-reducer";
 
 
 let state: InitialStateType;
@@ -28,7 +28,7 @@ test("error should be set", () => {
 })
 
 test("isInitialized should be changed to true", () => {
-    const newState = appReducer(state, setIsInitialized({isInitialized: true}));
+    const newState = appReducer(state, setInitialized.fulfilled({isInitialized: true}, ''));
 
     expect(newState.isInitialized).toBeTruthy();
 })

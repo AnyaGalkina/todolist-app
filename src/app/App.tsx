@@ -7,7 +7,7 @@ import {TodolistList} from "../features/Todolists/TodolistsList";
 import {CircularProgress, LinearProgress} from "@mui/material";
 import {ErrorSnackbars} from "../components/Snackbar/ErrorSnackbar";
 import {useSelector} from "react-redux";
-import {RequestStatusType, setInitializedTC} from "./app-reducer";
+import {RequestStatusType, setInitialized} from "./app-reducer";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import PageNotFound from "../components/404/404";
@@ -20,7 +20,7 @@ function App() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(setInitializedTC());
+        dispatch(setInitialized());
     }, []);
 
     if (!isInitialized) {

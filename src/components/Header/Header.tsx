@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import {useAppSelector} from "../../state/store";
 import {useAppDispatch} from "../../state/hooks";
-import {logoutTC} from "../../features/Login/auth-reducer";
+import {logout} from "../../features/Login/auth-reducer";
 
 export function Header() {
     const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
@@ -17,7 +17,7 @@ export function Header() {
 
 
     const onLoginClickHandler = useCallback(() => {
-        dispatch(logoutTC());
+        dispatch(logout());
     }, [isLoggedIn]);
 
     return (
