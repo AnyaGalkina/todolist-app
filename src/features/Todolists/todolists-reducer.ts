@@ -21,7 +21,6 @@ export const getTodolists = createAsyncThunk("todolists/getTodolists", async (pa
     dispatch(setAppStatus({status: "loading"}))
     try {
         const res = await todolistsAPI.getTodolist();
-        // dispatch(setTodolists({todolists: res.data}))
         dispatch(setAppStatus({status: "succeeded"}));
         return {todolists: res.data}
     } catch (error: any) {
@@ -46,8 +45,8 @@ export const removeTodolist = createAsyncThunk("todolists/removeTodolists", asyn
             handleServerAppError(res.data, dispatch);
             return rejectWithValue(null);
         }
-        dispatch(setEntityStatus({todolistId: param.todolistId, entityStatus: "failed"}));
-        return rejectWithValue(null);
+        // dispatch(setEntityStatus({todolistId: param.todolistId, entityStatus: "failed"}));
+        // return rejectWithValue(null);
 
     } catch (error: any) {
         handleServerNetworkError(error, dispatch);

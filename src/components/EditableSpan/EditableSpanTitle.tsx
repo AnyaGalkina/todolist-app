@@ -1,16 +1,14 @@
 import React, {useState, KeyboardEvent, ChangeEvent} from "react";
 import {TextField} from "@mui/material";
+import styles from "./EditableSpanTitle.module.css";
 
 type PropsType = {
     title: string;
     onChangeTitle: (title: string) => void;
-    disabled: boolean
+    disabled: boolean;
+    widthInput?: string;
 }
 
-function TextArea(props: { onBlur: () => void, onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void, autoFocus: boolean, value: string }) {
-    return null;
-}
 
 const EditableSpanTitle: React.FC<PropsType> = React.memo((props) => {
     const [editMode, setEditMode] = useState(false);
@@ -37,6 +35,7 @@ const EditableSpanTitle: React.FC<PropsType> = React.memo((props) => {
 
     return (
         editMode ? <TextField
+                style = {props.widthInput ? {width: props.widthInput} : {}}
                 color={"secondary"}
                 variant="standard"
                 value={title}
@@ -46,7 +45,7 @@ const EditableSpanTitle: React.FC<PropsType> = React.memo((props) => {
                 autoFocus
                 disabled={props.disabled}
             />
-            : <span onDoubleClick ={activateEditMode}>{props.title}</span>
+            : <span className={styles.span} onClick ={activateEditMode}>{props.title}</span>
     );
 });
 

@@ -12,3 +12,16 @@
     flex-wrap: wrap;
     opacity: 0.4;
 }
+
+.icons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.descriptionBlock {
+    width: 260px;
+    font-size: 14px;
+    color: slategrey;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}

@@ -102,11 +102,12 @@ export const updateTask = createAsyncThunk("tasks/updateTask", async (param: {
     taskId: string,
     model: UpdateModuleType
 }, {dispatch, rejectWithValue, getState}) => {
+
     dispatch(setAppStatus({status: "loading"}));
     dispatch(setTaskEntityStatus({todolistId: param.todolistId, taskId: param.taskId, entityStatus: "loading"}));
     const state = getState() as AppRootState;
     const task = state.tasks[param.todolistId].find(t => t.id === param.taskId);
-
+    debugger
     if (task) {
         const res = await todolistsAPI.updateTask({
             todolistId: param.todolistId, taskId: param.taskId, model: {
