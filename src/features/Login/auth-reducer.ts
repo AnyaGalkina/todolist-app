@@ -12,7 +12,9 @@ const initialState = {
 }
 
 export const login = createAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType, { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldsErrorType> } }>(
-    "auth/login", async (data, thunkAPI) => {
+    "auth/login",
+    //@ts-ignore
+    async (data, thunkAPI) => {
         thunkAPI.dispatch(setAppStatus({status: "loading"}));
         try {
             const res = await authAPI.login(data);
@@ -21,7 +23,9 @@ export const login = createAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType, 
                 // return {isLoggedIn: true};
             } else {
                 handleServerAppError(res.data, thunkAPI.dispatch);
-                return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
+                return thunkAPI.rejectWithValue({errors: res.data.messages,
+                    //@ts-ignore
+                    fieldsErrors: res.data.fieldsErrors});
             }
         } catch (error: any) {
             // if (axios.isAxiosError(error)) {
