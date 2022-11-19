@@ -7,12 +7,13 @@ import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import {FormikErrors, FormikHelpers, FormikValues, useFormik} from "formik";
+import {FormikErrors, FormikHelpers, useFormik} from "formik";
 import style from "./Login.module.css";
-import {useAppSelector} from "../../state/store";
 import {login} from "./auth-reducer";
 import {useAppDispatch} from "../../state/hooks";
 import {Navigate} from "react-router-dom";
+import {useSelector} from 'react-redux';
+import { selectorIsLoggedIn } from ".";
 
 type FormikValuesType = {
     email: string;
@@ -21,8 +22,9 @@ type FormikValuesType = {
 }
 
 export const Login = () => {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const dispatch = useAppDispatch();
+
+    const isLoggedIn = useSelector(selectorIsLoggedIn);
 
     const formik = useFormik({
         initialValues: {
@@ -43,10 +45,6 @@ export const Login = () => {
             }
             return errors
         },
-        // onSubmit: (values) => {
-        //     dispatch(login(values));
-        //     formik.resetForm();
-        // },
         onSubmit: async (values, formikHelpers: FormikHelpers<FormikValuesType>) => {
             const res = await dispatch(login(values));
             if (login.rejected.match(res)) {

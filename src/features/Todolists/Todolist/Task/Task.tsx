@@ -1,12 +1,12 @@
-import {removeTask, TaskDomainType, UpdateModuleType, updateTask} from "./tasks-reducer";
-import React, {ChangeEvent, useCallback, useState} from "react";
-import {Checkbox, IconButton} from "@mui/material";
-import EditableSpanTitle from "../../../../components/EditableSpan/EditableSpanTitle";
-import {DeleteOutline} from "@mui/icons-material";
-import styles from "./Task.module.css";
-import {TaskStatuses} from "../../../../api/todolistsAPI";
-import {useAppDispatch} from "../../../../state/hooks";
-import {ModalDescription} from "../../../../components/Modal/Modal";
+import {removeTask, TaskDomainType, UpdateModuleType, updateTask} from './tasks-reducer';
+import React, {ChangeEvent, useCallback, useState} from 'react';
+import {Checkbox, IconButton} from '@mui/material';
+import EditableSpanTitle from '../../../../components/EditableSpan/EditableSpanTitle';
+import {DeleteOutline} from '@mui/icons-material';
+import styles from './Task.module.css';
+import {TaskStatuses} from '../../../../api/todolistsAPI';
+import {useAppDispatch} from '../../../../state/hooks';
+import {ModalDescription} from '../../../../components/Modal/Modal';
 
 type TaskPropsType = {
     task: TaskDomainType;
@@ -42,7 +42,7 @@ export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
         setIsModalOpen(false);
     }, [isModalOpen, task.id, todolistId, task.description, dispatch]);
 
-    let isDisabled = task.entityStatus === "loading";
+    let isDisabled = task.entityStatus === 'loading';
 
     return (
         // <div  className={`${task.isDone ? styles.taskIsDone : styles.task}`}>
@@ -50,7 +50,7 @@ export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
             <div className={styles.task}>
                 <div>
                     <Checkbox
-                        style={{color: "#c7f774"}}
+                        style={{color: '#c7f774'}}
                         checked={task.status === TaskStatuses.Completed}
                         onChange={onStatusChangeHandler}
                         disabled={isDisabled}
@@ -66,7 +66,7 @@ export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
                                       handleOpen={handleModalOpen}
                     />
                     <IconButton onClick={onRemoveHandler} disabled={isDisabled}>
-                        <DeleteOutline style={{color: "#6b7d84"}} fontSize={"small"}/>
+                        <DeleteOutline style={{color: '#6b7d84'}} fontSize={'small'}/>
                     </IconButton>
                 </div>
             </div>

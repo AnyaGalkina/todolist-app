@@ -2,22 +2,23 @@ import React, {useEffect} from "react";
 import "./App.css";
 import Header from "../components/Header/Header";
 import Container from "@mui/material/Container";
-import {AppRootState, useAppSelector} from "../state/store";
 import {TodolistList} from "../features/Todolists/TodolistsList";
 import {CircularProgress, LinearProgress} from "@mui/material";
 import {ErrorSnackbars} from "../components/Snackbar/ErrorSnackbar";
 import {useSelector} from "react-redux";
-import {RequestStatusType, setInitialized} from "./app-reducer";
+import {setInitialized} from "./app-reducer";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import PageNotFound from "../components/404/404";
 import {useAppDispatch} from "../state/hooks";
+import {appSelectors} from './';
 
 
 function App() {
-    const requestStatus = useSelector<AppRootState, RequestStatusType>(state => state.app.status);
-    const isInitialized = useAppSelector(state => state.app.isInitialized);
     const dispatch = useAppDispatch();
+
+    const requestStatus = useSelector(appSelectors.selectRequestStatus);
+    const isInitialized = useSelector(appSelectors.selectIsInitialized);
 
     useEffect(() => {
         dispatch(setInitialized());

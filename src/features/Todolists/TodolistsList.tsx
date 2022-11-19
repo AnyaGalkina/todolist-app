@@ -1,5 +1,4 @@
 import {useSelector} from "react-redux";
-import {AppRootState, useAppSelector} from "../../state/store";
 import {addTodolist, getTodolists, TodolistDomainType} from "./todolists-reducer";
 import React, {useCallback, useEffect} from "react";
 import {Grid, Paper} from "@mui/material";
@@ -7,11 +6,13 @@ import AddItemForm from "../../components/AddItemForm/AddItemForm";
 import TodoList from "./Todolist/TodoList";
 import {useAppDispatch} from "../../state/hooks";
 import {Navigate} from "react-router-dom";
+import {selectorIsLoggedIn} from '../Login';
+import {selectorTodolists} from './';
 
 
 export const TodolistList = () => {
-    const todolists = useSelector<AppRootState, Array<TodolistDomainType>>(state => state.todolists);
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+    const todolists = useSelector(selectorTodolists);
+    const isLoggedIn = useSelector(selectorIsLoggedIn);
 
     const dispatch = useAppDispatch();
 

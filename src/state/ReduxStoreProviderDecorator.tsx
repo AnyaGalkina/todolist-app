@@ -3,7 +3,6 @@ import {applyMiddleware, combineReducers, createStore} from "redux"
 import {v1} from "uuid"
 import {tasksReducer} from "../features/Todolists/Todolist/Task/tasks-reducer";
 import {ALL, todolistsReducer} from "../features/Todolists/todolists-reducer";
-import {AppRootState, store} from "./store";
 import React from "react";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
 import {appReducer} from "../app/app-reducer";
@@ -77,13 +76,13 @@ const initialGlobalState = {
     }
 }
 
-// export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootState, applyMiddleware(thunk))
-//
-// export const ReduxStoreProviderDecorator = (storyFn: any) => (
-//     <Provider
-//         store={storyBookStore}>{storyFn()}
-//     </Provider>
-// )
+export const storyBookStore = createStore(rootReducer, initialGlobalState as any, applyMiddleware(thunk))
+
+export const ReduxStoreProviderDecorator = (storyFn: any) => (
+    <Provider
+        store={storyBookStore}>{storyFn()}
+    </Provider>
+)
 
 
 
