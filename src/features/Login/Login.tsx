@@ -14,6 +14,7 @@ import {useAppDispatch} from "../../state/hooks";
 import {Navigate} from "react-router-dom";
 import {useSelector} from 'react-redux';
 import { selectorIsLoggedIn } from ".";
+import WarningIcon from '@mui/icons-material/Warning';
 
 type FormikValuesType = {
     email: string;
@@ -76,8 +77,20 @@ export const Login = () => {
                         <p>or use common test account credentials:</p>
                         <p>Email: free@samuraijs.com</p>
                         <p>Password: free</p>
+
+                        <div className={style.warningBlock}>
+                            <div className={style.warningText}>
+                                <WarningIcon fontSize="large" style={{color: 'orange', paddingRight: '10px'}}/>
+                                If you have some issue with log in using Safari, please follow instructions:
+                            </div>
+                            <div>
+                                Click the Safari menu, you will see the Preferences item - click on it. Then click the Privacy item
+                                to see privacy related options. You will see the Website tracking checkbox. Click on Prevent
+                                cross-site tracking.
+                            </div>
+                        </div>
                     </FormLabel>
-                    <FormGroup>
+                    <FormGroup style={{width: "340px"}}>
                         <TextField label="Email"
                                    margin="normal"
                                    {...formik.getFieldProps("email")}

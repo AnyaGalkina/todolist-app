@@ -1,3 +1,17 @@
 .error {
     color: #f32b2b;
 }
+
+.warningBlock {
+    max-width: 650px;
+    border: 1px solid;
+    padding: 10px;
+    opacity: 0.6;
+    margin-bottom: 20px;
+}
+
+.warningText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
