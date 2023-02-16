@@ -1,20 +1,23 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import Checkbox from "@mui/material/Checkbox";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
-import FormLabel from "@mui/material/FormLabel";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import {FormikErrors, FormikHelpers, useFormik} from "formik";
-import style from "./Login.module.css";
-import {login} from "./auth-reducer";
-import {useAppDispatch} from "../../state/hooks";
-import {Navigate} from "react-router-dom";
+import React, {useCallback, useState} from 'react';
+import Grid from '@mui/material/Grid';
+import Checkbox from '@mui/material/Checkbox';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import FormLabel from '@mui/material/FormLabel';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import {FormikErrors, FormikHelpers, useFormik} from 'formik';
+import {login} from './auth-reducer';
+import {useAppDispatch} from '../../state/hooks';
+import {Navigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import { selectorIsLoggedIn } from ".";
-import WarningIcon from '@mui/icons-material/Warning';
+import {selectorIsLoggedIn} from '.';
+import {WarningText} from './WarningText/WarningText';
+import {DataForLogin} from './dataForLogin/DataForLogin';
+import {ErrorInfo} from './errorInfio/ErrorInfo';
+import {PasswordVisibility} from '../../components/passwordVisibility/PasswordVisibility';
+import {InputAdornment} from '@mui/material';
 
 type FormikValuesType = {
     email: string;
@@ -29,20 +32,20 @@ export const Login = () => {
 
     const formik = useFormik({
         initialValues: {
-            email: "",
-            password: "",
+            email: '',
+            password: '',
             rememberMe: false
         },
         validate: (values) => {
-            const errors: FormikErrors<any> = {};
+            const errors: FormikErrors<FormikValuesType> = {};
 
             if (!values.email) {
-                errors.email = "Email is required"
+                errors.email = 'Email is required'
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = "Invalid email address";
+                errors.email = 'Invalid email address';
             }
             if (values.password.length < 2) {
-                errors.password = "Password should be minimum 2 symbols";
+                errors.password = 'Password should be minimum 2 symbols';
             }
             return errors
         },
@@ -60,55 +63,51 @@ export const Login = () => {
         },
     })
 
+    const [passwordType, setPasswordType] = useState("password");
+
+    const toggleShowPassword = useCallback(() => {
+        passwordType === "password" ? setPasswordType("text") : setPasswordType("password")
+    },[passwordType]);
+
+
     if (isLoggedIn) {
-        return <Navigate to={"/todolist-app"}/>
+        return <Navigate to={'/todolist-app'}/>
     }
 
-    return <Grid container justifyContent={"center"}>
-        <Grid item justifyContent={"center"}>
+    return <Grid container justifyContent={'center'}>
+        <Grid item justifyContent={'center'}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl>
-                    <FormLabel>
-                        <p>To log in get registered
-                            <a style={{color: "white"}} href={"https://social-network.samuraijs.com/"}
-                               target={"_blank"}> here
-                            </a>
-                        </p>
-                        <p>or use common test account credentials:</p>
-                        <p>Email: free@samuraijs.com</p>
-                        <p>Password: free</p>
 
-                        <div className={style.warningBlock}>
-                            <div className={style.warningText}>
-                                <WarningIcon fontSize="large" style={{color: 'orange', paddingRight: '10px'}}/>
-                                If you have some issue with log in using Safari, please follow instructions:
-                            </div>
-                            <div>
-                                Click the Safari menu, you will see the Preferences item - click on it. Then click the Privacy item
-                                to see privacy related options. You will see the Website tracking checkbox. Click on Prevent
-                                cross-site tracking.
-                            </div>
-                        </div>
+                    <FormLabel>
+                        <DataForLogin/>
+                        <WarningText/>
                     </FormLabel>
-                    <FormGroup style={{width: "340px"}}>
+
+                    <FormGroup style={{width: '340px'}}>
                         <TextField label="Email"
                                    margin="normal"
-                                   {...formik.getFieldProps("email")}
+                                   {...formik.getFieldProps('email')}
                         />
-                        {formik.touched.email && formik.errors.email &&
-                            <div className={style.error}>{formik.errors.email}</div>}
-                        <TextField type="password" label="Password"
+                        <ErrorInfo touched={formik.touched.email} errors={formik.errors.email}/>
+
+                        <TextField type={passwordType} label="Password"
                                    margin="normal"
-                                   {...formik.getFieldProps("password")}
+                                   {...formik.getFieldProps('password')}
+                                   InputProps={{
+                                       endAdornment: <InputAdornment position="end">
+                                           <PasswordVisibility  passwordType={passwordType}  toggleShowPassword={toggleShowPassword}/>
+                                       </InputAdornment>}}
                         />
-                        {formik.touched.password && formik.errors.password &&
-                            <div className={style.error}>{formik.errors.password}</div>}
-                        <FormControlLabel label={"Remember me"} control={
+                        <ErrorInfo touched={formik.touched.password } errors={formik.errors.password }/>
+
+                        <FormControlLabel label={'Remember me'} control={
                             <Checkbox
-                                {...formik.getFieldProps("rememberMe")}
+                                {...formik.getFieldProps('rememberMe')}
                                 checked={formik.values.rememberMe}
                             />}/>
-                        <Button type={"submit"} variant={"contained"} color={"primary"}>
+
+                        <Button type={'submit'} variant={'contained'} color={'primary'}>
                             Login
                         </Button>
                     </FormGroup>
