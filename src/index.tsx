@@ -1,13 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./app/App";
-import * as serviceWorker from "./serviceWorker";
+import {App, theme} from './app';
 import { CssBaseline, ThemeProvider} from "@mui/material";
 import {Provider} from "react-redux";
-import {store} from "./state/store";
+import {store} from './state';
 import {BrowserRouter} from "react-router-dom";
-import {theme} from "./app/theme";
 
 
 
@@ -22,5 +20,3 @@ ReactDOM.render(
     </BrowserRouter>
     ,
     document.getElementById("root"));
-
-serviceWorker.unregister();
