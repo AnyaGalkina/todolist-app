@@ -1,12 +1,11 @@
 import {removeTask, TaskDomainType, UpdateModuleType, updateTask} from './tasks-reducer';
 import React, {ChangeEvent, useCallback, useState} from 'react';
 import {Checkbox, IconButton} from '@mui/material';
-import EditableSpanTitle from '../../../../components/EditableSpan/EditableSpanTitle';
+import {EditableSpanTitle, ModalDescription} from '../../../../components';
 import {DeleteOutline} from '@mui/icons-material';
 import styles from './Task.module.css';
 import {TaskStatuses} from '../../../../api/todolistsAPI';
-import {useAppDispatch} from '../../../../state/hooks';
-import {ModalDescription} from '../../../../components/Modal/Modal';
+import {useAppDispatch} from '../../../../state';
 
 type TaskPropsType = {
     task: TaskDomainType;
@@ -37,7 +36,6 @@ export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
     }, [isModalOpen, dispatch]);
 
     const handleModalSave = useCallback((model: UpdateModuleType) => {
-        debugger
         dispatch(updateTask({todolistId, taskId: task.id, model}));
         setIsModalOpen(false);
     }, [isModalOpen, task.id, todolistId, task.description, dispatch]);
@@ -45,7 +43,7 @@ export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
     let isDisabled = task.entityStatus === 'loading';
 
     return (
-        // <div  className={`${task.isDone ? styles.taskIsDone : styles.task}`}>
+
         <div>
             <div className={styles.task}>
                 <div>
@@ -65,7 +63,7 @@ export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
                                       handleClose={handleModalClose}
                                       handleOpen={handleModalOpen}
                     />
-                    <IconButton onClick={onRemoveHandler} disabled={isDisabled}>
+                    <IconButton aria-label="delete task" onClick={onRemoveHandler} disabled={isDisabled}>
                         <DeleteOutline style={{color: '#6b7d84'}} fontSize={'small'}/>
                     </IconButton>
                 </div>
