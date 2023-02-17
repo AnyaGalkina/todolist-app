@@ -1,11 +1,11 @@
 import {Provider} from "react-redux"
 import {applyMiddleware, combineReducers, createStore} from "redux"
 import {v1} from "uuid"
-import {tasksReducer} from "../features/Todolists/Todolist/Task/tasks-reducer";
+import {tasksReducer} from '../features';
 import {ALL, todolistsReducer} from "../features/Todolists/todolists-reducer";
 import React from "react";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
-import {appReducer} from "../app/app-reducer";
+import {appReducer} from '../app/app-reducer';
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({

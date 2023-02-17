@@ -1,13 +1,13 @@
-import {useSelector} from "react-redux";
+// import {useSelector} from "react-redux";
 import {addTodolist, getTodolists, TodolistDomainType} from "./todolists-reducer";
 import React, {useCallback, useEffect} from "react";
 import {Grid, Paper} from "@mui/material";
-import AddItemForm from "../../components/AddItemForm/AddItemForm";
-import TodoList from "./Todolist/TodoList";
-import {useAppDispatch} from "../../state/hooks";
+import {AddItemForm} from '../../components';
+import {useAppDispatch} from '../../state';
 import {Navigate} from "react-router-dom";
 import {selectorIsLoggedIn} from '../Login';
-import {selectorTodolists} from './';
+import {selectorTodolists, TodoList} from '.';
+import {useSelector} from 'react-redux';
 
 
 export const TodolistList = () => {

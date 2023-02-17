@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {setAppStatus, setAppError} from "../app/app-reducer";
+import {setAppStatus, setAppError} from '../app';
 import {CommonResType} from "../api/todolistsAPI";
 
 export const handleServerNetworkError = (error: { message: string }, dispatch: Dispatch) => {

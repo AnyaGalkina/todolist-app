@@ -1,6 +1,6 @@
-import React, {useState, KeyboardEvent, ChangeEvent} from "react";
-import {TextField} from "@mui/material";
-import styles from "./EditableSpanTitle.module.css";
+import React, {useState, KeyboardEvent, ChangeEvent} from 'react';
+import {TextField} from '@mui/material';
+import styles from './EditableSpanTitle.module.css';
 
 type PropsType = {
     title: string;
@@ -10,7 +10,7 @@ type PropsType = {
 }
 
 
-const EditableSpanTitle: React.FC<PropsType> = React.memo((props) => {
+export const EditableSpanTitle: React.FC<PropsType> = React.memo((props) => {
     const [editMode, setEditMode] = useState(false);
     const [title, setTitle] = useState(props.title);
 
@@ -24,19 +24,18 @@ const EditableSpanTitle: React.FC<PropsType> = React.memo((props) => {
     }
 
     const activateViewMode = () => {
-        debugger
         setEditMode(false);
         props.onChangeTitle(title)
     }
 
     const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        event.key === "Enter" && activateViewMode();
+        event.key === 'Enter' && activateViewMode();
     }
 
     return (
         editMode ? <TextField
-                style = {props.widthInput ? {width: props.widthInput} : {}}
-                color={"secondary"}
+                style={props.widthInput ? {width: props.widthInput} : {}}
+                color={'secondary'}
                 variant="standard"
                 value={title}
                 onChange={onChangeTitleHandler}
@@ -45,8 +44,6 @@ const EditableSpanTitle: React.FC<PropsType> = React.memo((props) => {
                 autoFocus
                 disabled={props.disabled}
             />
-            : <span className={styles.span} onClick ={activateEditMode}>{props.title}</span>
+            : <span className={styles.span} onClick={activateEditMode}>{props.title}</span>
     );
 });
-
-export default EditableSpanTitle;

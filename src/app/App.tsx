@@ -1,24 +1,23 @@
 import React, {useEffect} from "react";
 import "./App.css";
-import Header from "../components/Header/Header";
+import {Header} from "../components/Header/Header";
 import Container from "@mui/material/Container";
-import {TodolistList} from "../features/Todolists/TodolistsList";
+import {TodolistList} from '../features';
 import {CircularProgress, LinearProgress} from "@mui/material";
-import {ErrorSnackbars} from "../components/Snackbar/ErrorSnackbar";
+import {ErrorSnackbars, PageNotFound} from '../components';
 import {useSelector} from "react-redux";
 import {setInitialized} from "./app-reducer";
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Login} from "../features/Login/Login";
-import PageNotFound from "../components/404/404";
-import {useAppDispatch} from "../state/hooks";
-import {appSelectors} from './';
+import {Login} from '../features';
+import {useAppDispatch} from '../state';
+import {selectIsInitialized, selectRequestStatus} from './selectors';
 
 
-function App() {
+export function App () {
     const dispatch = useAppDispatch();
 
-    const requestStatus = useSelector(appSelectors.selectRequestStatus);
-    const isInitialized = useSelector(appSelectors.selectIsInitialized);
+    const requestStatus = useSelector(selectRequestStatus);
+    const isInitialized = useSelector(selectIsInitialized);
 
     useEffect(() => {
         dispatch(setInitialized());
@@ -48,7 +47,3 @@ function App() {
         </div>
     );
 }
-
-export default App;
-
-

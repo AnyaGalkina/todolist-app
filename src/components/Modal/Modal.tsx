@@ -1,10 +1,11 @@
 import React, {memo, useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton} from "@mui/material";
-import EditableSpanTitle from "../EditableSpan/EditableSpanTitle";
+import {EditableSpanTitle} from "../EditableSpan/EditableSpanTitle";
 import {UpdateModuleType} from "../../features/Todolists/Todolist/Task/tasks-reducer";
-import {useAppSelector} from "../../state/store";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import styles from "./Modal.module.css";
+import {selectRequestStatus} from '../../app';
+import {useSelector} from 'react-redux';
 
 
 type PropsType = {
@@ -28,7 +29,7 @@ const style = {
 }
 
 export const ModalDescription = memo(({open, description, handleClose, title, handleSave, handleOpen}: PropsType) => {
-    const appStatus = useAppSelector(state => state.app.status);
+    const appStatus = useSelector(selectRequestStatus);
 
     const [newDescription, setNewDescription] = useState(description);
 
@@ -44,7 +45,7 @@ export const ModalDescription = memo(({open, description, handleClose, title, ha
 
     return (
         <div>
-            <IconButton onClick={handleOpen} disabled={isDisabled}>
+            <IconButton  aria-label="add description"  onClick={handleOpen} disabled={isDisabled}>
                 <AssignmentIcon style={{color: "#6b7d84"}} fontSize={"small"}/>
             </IconButton>
             <Dialog sx={style} open={open} onClose={handleClose}>
@@ -53,7 +54,6 @@ export const ModalDescription = memo(({open, description, handleClose, title, ha
 
                 <div className={styles.bodyDescriptionBlock}>
                     <DialogContent style={{maxWidth: "500px"}}>
-                        {/*<TaskImage newDescription={newDescription} setNewDescription={setNewDescription} isDisabled={isDisabled}/>*/}
                         <EditableSpanTitle
                             widthInput={"350px"}
                             title={newDescription ? newDescription : "Click on text to add new description"}

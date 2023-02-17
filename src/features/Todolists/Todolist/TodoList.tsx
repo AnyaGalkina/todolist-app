@@ -1,9 +1,8 @@
 import React, {useCallback, useEffect} from "react";
-import AddItemForm from "../../../components/AddItemForm/AddItemForm";
-import EditableSpanTitle from "../../../components/EditableSpan/EditableSpanTitle";
+import {AddItemForm, EditableSpanTitle} from '../../../components';
 import {Button, IconButton} from "@mui/material";
 import {DeleteOutlined} from "@mui/icons-material";
-import {addTask, getTasks, TaskDomainType} from "./Task/tasks-reducer";
+import {TaskDomainType} from "./Task/tasks-reducer";
 import {
     ACTIVE,
     ALL,
@@ -16,19 +15,18 @@ import {
 } from "../todolists-reducer";
 import {useSelector} from "react-redux";
 import {AppRootState} from "../../../state/store";
-import {Task} from "./Task/Task";
+import {Task, addTask, getTasks } from '.';
 import styles from "./TodoList.module.css";
 import {TaskStatuses} from "../../../api/todolistsAPI";
-import {useAppDispatch} from "../../../state/hooks";
+import {useAppDispatch} from '../../../state';
 
 
 type PropsType = {
     todolist: TodolistDomainType;
 }
 
-const TodoList = React.memo(({todolist}: PropsType) => {
+export const TodoList = React.memo(({todolist}: PropsType) => {
     const {title, id: todolistId, filter, entityStatus} = todolist;
-    // const dispatch = useDispatch();
     let tasks = useSelector<AppRootState, Array<TaskDomainType>>(state => state.tasks[todolistId]);
     const dispatch = useAppDispatch();
 
@@ -112,6 +110,3 @@ const TodoList = React.memo(({todolist}: PropsType) => {
         </div>
     )
 });
-
-export default TodoList;
-

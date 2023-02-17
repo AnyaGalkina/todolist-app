@@ -6,8 +6,7 @@ type PropsType = {
     disabled: boolean
 }
 
-
-const AddItemForm = React.memo((props: PropsType) => {
+export const AddItemForm = React.memo((props: PropsType) => {
     const [newItemTitle, setNewItemTitle] = useState("");
     const [error, setError] = useState<string | null>(null);
 
@@ -29,8 +28,6 @@ const AddItemForm = React.memo((props: PropsType) => {
         e.key === "Enter" && addItem();
     }
 
-    // let isDisabled = error !== null && true;
-
     return (
         <div>
             <TextField variant="outlined"
@@ -43,11 +40,6 @@ const AddItemForm = React.memo((props: PropsType) => {
                        style={{color: "white"}}
                        disabled={props.disabled}
             />
-            {/*<input*/}
-            {/*    className={`${error && styles.error}`}*/}
-            {/*    onChange={onChangeHandler}*/}
-            {/*    value={newTaskTitle}*/}
-            {/*    onKeyDown={onKeyDownHandler}/>*/}
 
             <Button
                 variant={"contained"}
@@ -55,13 +47,7 @@ const AddItemForm = React.memo((props: PropsType) => {
                 onClick={addItem}
                 disabled={error !== null || props.disabled && true}
             >+</Button>
-
-            {
-                // error && <div className={styles.errorMessage}>{error}</div>
-            }
         </div>
     )
         ;
 });
-
-export default AddItemForm;
