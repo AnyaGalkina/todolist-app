@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {Button, TextField} from "@mui/material";
+import styles from './AddItemForm.module.css';
 
 type PropsType = {
     addItem: (title: string) => void;
@@ -29,7 +30,7 @@ export const AddItemForm = React.memo((props: PropsType) => {
     }
 
     return (
-        <div>
+        <div className={styles.addItemContainer}>
             <TextField variant="outlined"
 
                        value={newItemTitle}
@@ -43,11 +44,10 @@ export const AddItemForm = React.memo((props: PropsType) => {
 
             <Button
                 variant={"contained"}
-                style={{maxWidth: "30px", maxHeight: "30px", minWidth: "30px", minHeight: "30px"}}
+                style={{maxWidth: "30px", maxHeight: "30px", minWidth: "30px", minHeight: "30px", margin: "5px"}}
                 onClick={addItem}
                 disabled={error !== null || props.disabled && true}
             >+</Button>
         </div>
-    )
-        ;
+    );
 });
