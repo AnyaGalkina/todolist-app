@@ -1,3 +1,5 @@
 .span {
     cursor: pointer;
+    word-wrap: break-word;
+    width: 140px;
 }

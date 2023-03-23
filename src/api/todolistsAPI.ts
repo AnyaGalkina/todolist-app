@@ -2,6 +2,7 @@ import axios, {AxiosResponse} from "axios";
 
 export const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.1",
+    // baseURL: "https://todolists.samuraijs.com/api/1.0",
     withCredentials: true,
     headers: {"api-key": "8cb31c3e-5e62-4d4f-945f-025b0014bebf"}
 });

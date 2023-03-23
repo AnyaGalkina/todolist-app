@@ -7,7 +7,7 @@ type PropsType = {
     disabled: boolean
 }
 
-export const AddItemForm = React.memo((props: PropsType) => {
+export const AddItemForm = React.memo(({addItem, disabled}: PropsType) => {
     const [newItemTitle, setNewItemTitle] = useState("");
     const [error, setError] = useState<string | null>(null);
 
@@ -16,17 +16,17 @@ export const AddItemForm = React.memo((props: PropsType) => {
         error && setError(null);
     };
 
-    let addItem = () => {
+    let addItemHandler = () => {
         let trimedItem = newItemTitle.trim();
         if (trimedItem) {
-            props.addItem(newItemTitle);
+            addItem(newItemTitle);
         } else {
             setError("Title is required");
         }
         setNewItemTitle("");
     }
     let onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        e.key === "Enter" && addItem();
+        e.key === "Enter" && addItemHandler();
     }
 
     return (
@@ -39,14 +39,14 @@ export const AddItemForm = React.memo((props: PropsType) => {
                        error={!!error}
                        label={error ? "Title is required" : "Title"}
                        style={{color: "white"}}
-                       disabled={props.disabled}
+                       disabled={disabled}
             />
 
             <Button
                 variant={"contained"}
                 style={{maxWidth: "30px", maxHeight: "30px", minWidth: "30px", minHeight: "30px", margin: "5px"}}
-                onClick={addItem}
-                disabled={error !== null || props.disabled && true}
+                onClick={addItemHandler}
+                disabled={error !== null || disabled && true}
             >+</Button>
         </div>
     );

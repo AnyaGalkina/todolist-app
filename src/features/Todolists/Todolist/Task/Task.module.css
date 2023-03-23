@@ -1,8 +1,15 @@
-.task {
+.taskContainer {
     width: 260px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .taskIsDone {
@@ -16,6 +23,7 @@
 .icons {
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 
 .descriptionBlock {

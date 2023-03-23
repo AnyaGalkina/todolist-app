@@ -45,14 +45,16 @@ export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
     return (
 
         <div>
-            <div className={styles.task}>
-                <div>
-                    <Checkbox
-                        style={{color: '#c7f774'}}
-                        checked={task.status === TaskStatuses.Completed}
-                        onChange={onStatusChangeHandler}
-                        disabled={isDisabled}
-                    />
+            <div className={styles.taskContainer}>
+                <div className={styles.task}>
+                    <div>
+                        <Checkbox
+                            style={{color: '#c7f774'}}
+                            checked={task.status === TaskStatuses.Completed}
+                            onChange={onStatusChangeHandler}
+                            disabled={isDisabled}
+                        />
+                    </div>
                     <EditableSpanTitle title={task.title} onChangeTitle={onChangeTitleHandler} disabled={isDisabled}/>
                 </div>
                 <div className={styles.icons}>
