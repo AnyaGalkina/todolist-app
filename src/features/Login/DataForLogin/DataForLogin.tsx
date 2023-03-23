@@ -9,8 +9,8 @@ export const DataForLogin = () => {
                 </a>
             </p>
             <p>or use common test account credentials:</p>
-            <p>Email: free@samuraijs.com</p>
-            <p>Password: free</p>
+            <p>Email: anna.blackbird1@gmail.com</p>
+            <p>Password: Free12345</p>
         </div>
     );
 };
